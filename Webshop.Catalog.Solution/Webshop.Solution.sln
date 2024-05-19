@@ -53,7 +53,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{75AFF8
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.Help", "Webshop.Help\Webshop.Help.csproj", "{9A5052E1-74A6-45D4-9EEE-046F3D0D21FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.Help", "Webshop.Help\Webshop.Help.csproj", "{9A5052E1-74A6-45D4-9EEE-046F3D0D21FA}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Georgia_Tech_Library_Database", "Georgia_Tech_Library_Database\Georgia_Tech_Library_Database.sqlproj", "{16D4A339-C621-4423-8801-474F297DCEA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,6 +119,12 @@ Global
 		{9A5052E1-74A6-45D4-9EEE-046F3D0D21FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A5052E1-74A6-45D4-9EEE-046F3D0D21FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A5052E1-74A6-45D4-9EEE-046F3D0D21FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16D4A339-C621-4423-8801-474F297DCEA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16D4A339-C621-4423-8801-474F297DCEA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16D4A339-C621-4423-8801-474F297DCEA6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{16D4A339-C621-4423-8801-474F297DCEA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16D4A339-C621-4423-8801-474F297DCEA6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16D4A339-C621-4423-8801-474F297DCEA6}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
