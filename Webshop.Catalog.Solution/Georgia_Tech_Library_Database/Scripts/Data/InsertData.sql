@@ -77,7 +77,12 @@ INSERT INTO [dbo].[BookDetail] ([ISBN], [Description], [Language], [Type], [Rele
 VALUES 
 ('9780134685991', 'A comprehensive guide to modern software development using Clean Code principles.', 'English', 'Book', '2017-08-11', 0, 1),
 ('9780132350884', 'An in-depth look at Agile software development methodologies and practices.', 'English', 'Book', '2008-08-01', 0, 1),
-('9781491950357', 'A practical introduction to JavaScript and modern web development.', 'English', 'Book', '2016-09-03', 0, 1);
+('9781491950357', 'A practical introduction to JavaScript and modern web development.', 'English', 'Book', '2016-09-03', 0, 1),
+('9781119038643', 'A comprehensive guide to mastering Python programming.', 'English', 'Book', '2020-05-15', 0, 1),
+('9781492045526', 'A detailed guide to understanding and using Kubernetes.', 'English', 'Book', '2019-08-08', 0, 1),
+('9780134757599', 'An in-depth look at modern C++ programming practices.', 'English', 'Book', '2018-10-20', 0, 1),
+('9780262033848', 'An introduction to algorithms and data structures.', 'English', 'Book', '2009-07-31', 0, 1),
+('9780134177304', 'A practical guide to software architecture.', 'English', 'Book', '2015-09-23', 0, 1);
 
 -- Insert Books (Type: Book, WishToAcquire = 1, IsLoanable = 0)
 INSERT INTO [dbo].[BookDetail] ([ISBN], [Description], [Language], [Type], [ReleaseDate], [WishToAcquire], [IsLoanable])
@@ -157,7 +162,21 @@ VALUES
 
 (NEWID(), 'Design Patterns: Elements of Reusable Object-Oriented Software', 0, 'Software Design', '9780201616224', 'GeorgiaTechLibrary'),
 
-(NEWID(), 'Patterns of Enterprise Application Architecture', 0, 'Software Design', '9780137081073', 'GeorgiaTechLibrary')
+(NEWID(), 'Patterns of Enterprise Application Architecture', 0, 'Software Design', '9780137081073', 'GeorgiaTechLibrary'),
+(NEWID(), 'Python for Data Analysis', 0, 'Programming', '9781119038643', 'GeorgiaTechLibrary'),
+(NEWID(), 'Python for Data Analysis', 0, 'Programming', '9781119038643', 'GeorgiaTechLibrary'),
+
+(NEWID(), 'Kubernetes: Up and Running', 0, 'Cloud Computing', '9781492045526', 'GeorgiaTechLibrary'),
+(NEWID(), 'Kubernetes: Up and Running', 0, 'Cloud Computing', '9781492045526', 'GeorgiaTechLibrary'),
+
+(NEWID(), 'Effective Modern C++', 0, 'Programming', '9780134757599', 'GeorgiaTechLibrary'),
+(NEWID(), 'Effective Modern C++', 0, 'Programming', '9780134757599', 'GeorgiaTechLibrary'),
+
+(NEWID(), 'Introduction to Algorithms', 0, 'Computer Science', '9780262033848', 'GeorgiaTechLibrary'),
+(NEWID(), 'Introduction to Algorithms', 0, 'Computer Science', '9780262033848', 'GeorgiaTechLibrary'),
+
+(NEWID(), 'Software Architecture in Practice', 0, 'Software Engineering', '9780134177304', 'GeorgiaTechLibrary'),
+(NEWID(), 'Software Architecture in Practice', 0, 'Software Engineering', '9780134177304', 'GeorgiaTechLibrary');
 
 -- Maps
 INSERT INTO [dbo].[Book] ([BookID], [Title], [OnLoan], [Subject], [ISBN], [LibraryID])
@@ -197,4 +216,47 @@ INSERT INTO [dbo].[Book] ([BookID], [Title], [OnLoan], [Subject], [ISBN], [Libra
 VALUES 
 (NEWID(), 'Vogue Magazine', 0, 'Fashion', '9780528006292', 'GeorgiaTechLibrary'),
 
-(NEWID(), 'TopGear Magazine', 0, 'Automotive', '9780528006308', 'GeorgiaTechLibrary')
+(NEWID(), 'TopGear Magazine', 0, 'Automotive', '9780528006308', 'GeorgiaTechLibrary');
+
+--Annette	20E0B8C3-EDCA-42EF-8B9C-6763DEB2BFF6
+--Oliver	27577D17-B838-43BE-AFAC-0A9E5E568B9F
+--Kristian	9F9931EE-500D-40F8-8FCB-722B3D9F1E20
+--Arosan	B3C734CD-D1B2-4C9D-9696-9DCCDF52B072
+--Joe Biden	FB2425A5-C16A-4829-A9D9-73EACD7A3469
+--Lionel Messi	D5F3BF61-A5BC-4E1F-9A10-6AA607655DF8
+--Gianna	2D742D46-5AA1-40F5-B2A3-1F25BCEBDC2F
+--Nadeem	503D551D-E3B5-4BC9-96A7-4743F903C83F
+--Brain	386EB091-D2FB-49FA-A5D3-1930756460DD
+
+-- Insert BookLoaned
+INSERT INTO [dbo].[BooksLoaned] ([LoanID], [BookID], [MemberCardID], [LoanDate], [ReturnDate])
+VALUES
+(1, '23E00031-6FD4-48FF-AF51-01427F342C4A', '9F9931EE-500D-40F8-8FCB-722B3D9F1E20', DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()), DATEADD(DAY, 21, DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()))), -- Annette
+(2, '82A92930-6DD3-472B-B5D2-01ED05F85E54', '27577D17-B838-43BE-AFAC-0A9E5E568B9F', DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()), DATEADD(DAY, 21, DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()))), -- Oliver
+(3, 'D7C37DA3-62AA-4A70-8866-03AF9FCD64FC', '9F9931EE-500D-40F8-8FCB-722B3D9F1E20', DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()), DATEADD(DAY, 21, DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()))), -- Kristian
+(4, 'B9923AD6-72F7-4F7B-9518-1D430CF7A7F8', 'B3C734CD-D1B2-4C9D-9696-9DCCDF52B072', DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()), DATEADD(DAY, 21, DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()))), -- Arosan
+(5, 'E1C9C631-D4E6-4BD0-8E2D-202CA713A498', 'B3C734CD-D1B2-4C9D-9696-9DCCDF52B072', DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()), DATEADD(DAY, 21, DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()))), -- Joe
+(6, 'D5620E39-4588-4B9D-98D1-30D1644467AD', 'D5F3BF61-A5BC-4E1F-9A10-6AA607655DF8', DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()), DATEADD(DAY, 21, DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()))), -- Messi
+(7, 'BCF8433C-4D9F-4258-939B-C8893E8AB9C5', '2D742D46-5AA1-40F5-B2A3-1F25BCEBDC2F', DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()), DATEADD(DAY, 93, DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()))), -- Gianna
+(8, 'EDB19449-4CEB-4907-88B5-75F0E17163A3', '503D551D-E3B5-4BC9-96A7-4743F903C83F', DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()), DATEADD(DAY, 93, DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()))), -- Nadeem
+(9, '88641E06-1E1F-4FD0-8C84-F0C31230C878', '386EB091-D2FB-49FA-A5D3-1930756460DD', DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()), DATEADD(DAY, 93, DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()))), -- Brain
+(10, '436AD98A-89D7-4713-B20E-CD0599421D34', '27577D17-B838-43BE-AFAC-0A9E5E568B9F', '2024-05-06', DATEADD(DAY, 21, '2024-05-06')); -- Oliver
+
+-- Update Book OnLoan status
+UPDATE [dbo].[Book]
+SET OnLoan = 1
+WHERE BookID IN ('23E00031-6FD4-48FF-AF51-01427F342C4A', 
+                 '82A92930-6DD3-472B-B5D2-01ED05F85E54', 
+                 'D7C37DA3-62AA-4A70-8866-03AF9FCD64FC', 
+                 'B9923AD6-72F7-4F7B-9518-1D430CF7A7F8', 
+                 'E1C9C631-D4E6-4BD0-8E2D-202CA713A498', 
+                 'D5620E39-4588-4B9D-98D1-30D1644467AD', 
+                 'BCF8433C-4D9F-4258-939B-C8893E8AB9C5', 
+                 'EDB19449-4CEB-4907-88B5-75F0E17163A3', 
+                 '88641E06-1E1F-4FD0-8C84-F0C31230C878', 
+                 '436AD98A-89D7-4713-B20E-CD0599421D34');
+
+-- Insert BookExpirationDateNotice
+INSERT INTO [dbo].[BookExpirationDateNotice] ([ExpirationDateNoticeID], [BookID], [MemberCardID], [LoanDate], [RemiderDate])
+VALUES
+(1, '436AD98A-89D7-4713-B20E-CD0599421D34', '27577D17-B838-43BE-AFAC-0A9E5E568B9F', '2024-05-06', DATEADD(MONTH, -1, '2024-05-06'));

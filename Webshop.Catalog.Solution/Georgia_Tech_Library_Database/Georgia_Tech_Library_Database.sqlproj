@@ -75,6 +75,9 @@
     <Build Include="dbo\Tables\BooksLoaned.sql" />
     <Build Include="dbo\Tables\CardRenewalNotice.sql" />
     <Build Include="dbo\Tables\BookExpirationDateNotice.sql" />
-    <None Include="Scripts\Data\Test.sql" />
+    <None Include="Scripts\Data\InsertData.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Data\Testing Scripts.sql" />
   </ItemGroup>
 </Project>
