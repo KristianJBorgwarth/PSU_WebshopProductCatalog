@@ -9,7 +9,7 @@ public enum Role
 }
 public class BookstoreCustomer : AggregateRoot
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public bool IsSeller { get; set; }
     public bool IsBuyer { get; set; }
 

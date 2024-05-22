@@ -3,9 +3,6 @@ using Webshop.Data.Persistence;
 
 namespace Webshop.Bookstore.Persistence.Repositories;
 
-public class BookRepository : BaseRepository, IBookRepository
+public class BookRepository : IBookRepository
 {
-    public BookRepository(string tableName, DataContext dataContext) : base(tableName, dataContext)
-    {
-    }
 }

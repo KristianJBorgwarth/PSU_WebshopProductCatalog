@@ -2,6 +2,7 @@
 
 public class CreateCustomerRequest
 {
-    public required Guid CustomerId { get; set; }
-
+    public required int CustomerId { get; set; }
+    public bool IsSeller { get; set; }
+    public bool IsBuyer { get; set; }
 }
