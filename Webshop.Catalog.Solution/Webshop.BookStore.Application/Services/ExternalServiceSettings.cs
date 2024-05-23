@@ -3,4 +3,5 @@
 public class ExternalServiceSettings
 {
     public string CustomerServiceBaseUrl { get; set; }
+    public string CategoryServiceBaseUrl { get; set; }
 }

@@ -84,7 +84,7 @@ namespace PSU_PaymentGatewayTest.Models
         //public void Create_Invalid_Payment_Too_High_CVC_Expect_Exception()
         //{
         //    //Arrange
-        //    Action action = () => Payment.Create("1234", "11/11", 1000);
+        //    Action action = () => Payment.CreateBook("1234", "11/11", 1000);
         //    //Act + Assert
         //    Assert.Throws<ArgumentOutOfRangeException>(() => action());
         //}

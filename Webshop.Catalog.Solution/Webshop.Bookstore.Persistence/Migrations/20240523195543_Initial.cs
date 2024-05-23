@@ -37,7 +37,7 @@ namespace Webshopt.Bookstore.Persistence.Migrations
                     Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     SellerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LastModified = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -50,7 +50,7 @@ namespace Webshopt.Bookstore.Persistence.Migrations
                         column: x => x.SellerId,
                         principalTable: "BookstoreCustomers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
