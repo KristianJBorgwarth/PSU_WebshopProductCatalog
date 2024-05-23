@@ -26,8 +26,8 @@ namespace Webshop.Catalog.Domain.AggregateRoots
         /// <summary>
         /// The price is represented in the lowest monetary value. For Euros this is cents, this means that to show the price on the web site, we should divide with 100
         /// </summary>
-        public int Price { get; set; } 
-        public string Currency { get; set; } 
-        public int MinStock { get; set; }        
+        public int Price { get; set; }
+        public string Currency { get; set; }
+        public int MinStock { get; set; }
     }
 }

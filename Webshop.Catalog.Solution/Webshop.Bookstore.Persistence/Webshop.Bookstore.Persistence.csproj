@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Webshopt.Bookstore.Persistence</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Webshop.BookStore.Application\Webshop.BookStore.Application.csproj" />
+      <ProjectReference Include="..\Webshop.BookStore.Domain\Webshop.BookStore.Domain.csproj" />
+      <ProjectReference Include="..\Webshop.Data.Persistence\Webshop.Data.Persistence.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Migrations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.19" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.19">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.19" />
+    </ItemGroup>
+
+</Project>
