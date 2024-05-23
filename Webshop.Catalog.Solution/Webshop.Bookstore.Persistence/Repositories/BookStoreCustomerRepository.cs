@@ -35,6 +35,14 @@ public class BookStoreCustomerRepository : IBookStoreCustomerRepository
 
     public async Task<Result> UpdateCustomer(Guid customerId, bool isSeller, bool isBuyer)
     {
-        throw new NotImplementedException();
+        BookstoreCustomer? customer = _context.BookstoreCustomers.Find(customerId);
+        if (customer == null)
+        {
+            return Result.Fail(Errors.General.NotFound(customerId));
+        }
+        customer.IsSeller = isSeller;
+        customer.IsBuyer = isBuyer;
+        await _context.SaveChangesAsync();
+        return Result.Ok();
     }
 }
