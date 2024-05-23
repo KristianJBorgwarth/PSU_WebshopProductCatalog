@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using System.Reflection.Metadata.Ecma335;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.Domain.Common;
 
@@ -16,8 +17,7 @@ namespace Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.Dele
         public async Task<Result> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
             Result result = await _bookStoreCustomerRepository.DeleteCustomer(request.CustomerId);
-            if (!result.Success) return Result.Fail(result.Error);
-            return Result.Ok();
+            return result.Success ? Result.Ok() : Result.Fail(result.Error);
         }
     }
 }
