@@ -16,6 +16,8 @@ namespace Webshopt.Bookstore.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BaseCustomeerId = table.Column<int>(type: "int", nullable: false),
                     IsSeller = table.Column<bool>(type: "bit", nullable: false),
                     IsBuyer = table.Column<bool>(type: "bit", nullable: false),
                     LastModified = table.Column<DateTime>(type: "datetime2", nullable: false),

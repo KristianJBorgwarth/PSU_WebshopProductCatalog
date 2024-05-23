@@ -51,6 +51,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docker", "Docker", "{75AFF816-1819-450B-8D19-E4CBD80530B0}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
+		docker-compose.test.yml = docker-compose.test.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.Help", "Webshop.Help\Webshop.Help.csproj", "{9A5052E1-74A6-45D4-9EEE-046F3D0D21FA}"
@@ -62,6 +63,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.BookStore.Domain", "Webshop.BookStore.Domain\Webshop.BookStore.Domain.csproj", "{BD3265ED-6018-478E-A6D6-8674FD3B6BDB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.Bookstore.Persistence", "Webshop.Bookstore.Persistence\Webshop.Bookstore.Persistence.csproj", "{22761DF4-6CDB-4294-8DF1-D83512CA9978}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.BookStore.Application.Test.Integration", "Webshop.BookStore.Application.Test.Integration\Webshop.BookStore.Application.Test.Integration.csproj", "{8F337E65-0440-42A6-BF1E-7170512C65F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,6 +144,10 @@ Global
 		{22761DF4-6CDB-4294-8DF1-D83512CA9978}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22761DF4-6CDB-4294-8DF1-D83512CA9978}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22761DF4-6CDB-4294-8DF1-D83512CA9978}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F337E65-0440-42A6-BF1E-7170512C65F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F337E65-0440-42A6-BF1E-7170512C65F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F337E65-0440-42A6-BF1E-7170512C65F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F337E65-0440-42A6-BF1E-7170512C65F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -167,6 +174,7 @@ Global
 		{D219B7F0-E975-4B97-8639-B3C7D2200F2A} = {774CCD7D-ED3B-4D75-8A7F-CEFC745765DB}
 		{BD3265ED-6018-478E-A6D6-8674FD3B6BDB} = {774CCD7D-ED3B-4D75-8A7F-CEFC745765DB}
 		{22761DF4-6CDB-4294-8DF1-D83512CA9978} = {1E6BED77-EB85-4EC8-BE0F-7E8A57F3D4AF}
+		{8F337E65-0440-42A6-BF1E-7170512C65F8} = {BF604B02-EA9B-4EE8-A7F0-EDD07B387082}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {822AAF83-FC8D-42BE-9726-63314F24EB10}

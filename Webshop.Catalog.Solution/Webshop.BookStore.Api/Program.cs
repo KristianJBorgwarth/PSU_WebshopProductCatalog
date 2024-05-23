@@ -1,9 +1,11 @@
 using System.Reflection;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
 using Webshop.BookStore.Application.Profiles;
+using Webshop.BookStore.Application.Services;
 using Webshop.Bookstore.Persistence.Context;
 using Webshop.BookStore.Application.Services.CustomerService;
 using Webshop.Bookstore.Persistence.Repositories;
@@ -41,11 +43,20 @@ builder.Services.AddMediatR(cfg =>
 
 builder.Services.AddAutoMapper(cfg =>
 {
-    cfg.AddMaps(typeof(RequestMappingProfile).Assembly);
+    cfg.AddMaps(typeof(RequestMappingProfile).Assembly);;
 });
 #endregion
 
-#region Services setup
+#region ExternalServices setup
+
+builder.Services.Configure<ExternalServiceSettings>(configuration.GetSection("ExternalServiceSettings"));
+
+builder.Services.AddHttpClient("CustomerServiceClient", (serviceProvider, client) =>
+{
+    var settings = serviceProvider.GetRequiredService<IOptions<ExternalServiceSettings>>().Value;
+    client.BaseAddress = new Uri(settings.CustomerServiceBaseUrl);
+});
+
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 #endregion
 
@@ -80,3 +91,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

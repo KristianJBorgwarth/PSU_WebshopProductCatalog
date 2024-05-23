@@ -23,7 +23,7 @@ public class BookstoreCustomerController : BaseController
     }
 
     [HttpPost]
-    [Route("{id}")]
+    [Route("")]
     public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerRequest request)
     {
         CreateCustomerCommand command = _mapper.Map<CreateCustomerCommand>(request);

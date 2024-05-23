@@ -12,7 +12,7 @@ using Webshop.Bookstore.Persistence.Context;
 namespace Webshopt.Bookstore.Persistence.Migrations
 {
     [DbContext(typeof(BookstoreDbContext))]
-    [Migration("20240522081109_Initial")]
+    [Migration("20240522115907_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -71,6 +71,9 @@ namespace Webshopt.Bookstore.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("BaseCustomeerId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
@@ -82,6 +85,10 @@ namespace Webshopt.Bookstore.Persistence.Migrations
 
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

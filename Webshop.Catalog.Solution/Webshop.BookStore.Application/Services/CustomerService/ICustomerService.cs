@@ -1,6 +1,8 @@
-﻿namespace Webshop.BookStore.Application.Services.CustomerService;
+﻿using Webshop.Domain.Common;
+
+namespace Webshop.BookStore.Application.Services.CustomerService;
 
 public interface ICustomerService
 {
-    Task<CustomerDto?> GetCustomerAsync(int customerId);
+    Task<Result<CustomerResult>> GetCustomerAsync(int customerId);
 }

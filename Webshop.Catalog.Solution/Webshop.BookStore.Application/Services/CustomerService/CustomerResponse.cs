@@ -1,6 +1,15 @@
 ﻿namespace Webshop.BookStore.Application.Services.CustomerService;
 
-public class CustomerDto
+public class CustomerResponse
+{
+    public CustomerResult? Result { get; set; }
+
+    public string? ErrorMessage { get; set; }
+
+    public DateTime TimeGenerated { get; set; }
+}
+
+public class CustomerResult
 {
     public int Id { get; set; }
     public string Name { get; set; }

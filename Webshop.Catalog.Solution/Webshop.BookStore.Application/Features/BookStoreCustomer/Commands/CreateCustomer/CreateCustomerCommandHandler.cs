@@ -17,12 +17,12 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
 
     public async Task<Result> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
     {
-        CustomerDto? customer = await _customerService.GetCustomerAsync(request.CustomerId);
+      Result<CustomerResult> result = await _customerService.GetCustomerAsync(request.CustomerId);
 
-        if (customer is null) return Result.Fail(Errors.General.NotFound<int>(request.CustomerId));
+      if (!result.Success) return Result.Fail(result.Error);
 
-        _bookStoreCustomerRepository.AddCustomer(request.CustomerId, request.IsSeller, request.IsBuyer);
+      await _bookStoreCustomerRepository.AddCustomer(request.CustomerId, result.Value.Name, request.IsSeller, request.IsBuyer);
 
-        return Result.Ok();
+      return Result.Ok();
     }
 }
