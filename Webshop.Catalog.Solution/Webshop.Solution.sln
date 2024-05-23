@@ -66,6 +66,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.Bookstore.Persisten
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.BookStore.Application.Test.Integration", "Webshop.BookStore.Application.Test.Integration\Webshop.BookStore.Application.Test.Integration.csproj", "{8F337E65-0440-42A6-BF1E-7170512C65F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.Bookstore.Application.Test.Unit", "Webshop.Bookstore.Application.Test.Unit\Webshop.Bookstore.Application.Test.Unit.csproj", "{E5D7D6EC-6ED3-4769-A504-C56BBE9D26F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -148,6 +150,10 @@ Global
 		{8F337E65-0440-42A6-BF1E-7170512C65F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F337E65-0440-42A6-BF1E-7170512C65F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F337E65-0440-42A6-BF1E-7170512C65F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5D7D6EC-6ED3-4769-A504-C56BBE9D26F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5D7D6EC-6ED3-4769-A504-C56BBE9D26F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5D7D6EC-6ED3-4769-A504-C56BBE9D26F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5D7D6EC-6ED3-4769-A504-C56BBE9D26F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -175,6 +181,7 @@ Global
 		{BD3265ED-6018-478E-A6D6-8674FD3B6BDB} = {774CCD7D-ED3B-4D75-8A7F-CEFC745765DB}
 		{22761DF4-6CDB-4294-8DF1-D83512CA9978} = {1E6BED77-EB85-4EC8-BE0F-7E8A57F3D4AF}
 		{8F337E65-0440-42A6-BF1E-7170512C65F8} = {BF604B02-EA9B-4EE8-A7F0-EDD07B387082}
+		{E5D7D6EC-6ED3-4769-A504-C56BBE9D26F6} = {BF604B02-EA9B-4EE8-A7F0-EDD07B387082}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {822AAF83-FC8D-42BE-9726-63314F24EB10}

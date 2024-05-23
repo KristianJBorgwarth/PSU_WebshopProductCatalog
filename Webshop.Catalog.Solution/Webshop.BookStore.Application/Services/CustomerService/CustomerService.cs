@@ -33,7 +33,7 @@ public class CustomerService : ICustomerService
                 PropertyNameCaseInsensitive = true
             })!;
 
-            return customer.Result!;
+            return Result.Ok(customer.Result!);
         }
         catch (Exception ex)
         {

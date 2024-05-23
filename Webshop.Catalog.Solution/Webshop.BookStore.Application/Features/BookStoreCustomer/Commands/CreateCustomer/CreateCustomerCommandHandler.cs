@@ -9,6 +9,7 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
 {
     private readonly ICustomerService _customerService;
     private readonly IBookStoreCustomerRepository _bookStoreCustomerRepository;
+
     public CreateCustomerCommandHandler(ICustomerService customerService, IBookStoreCustomerRepository bookStoreCustomerRepository)
     {
         _customerService = customerService;
