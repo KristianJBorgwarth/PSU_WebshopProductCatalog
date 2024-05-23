@@ -10,7 +10,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.Books;
 
 public class CreateBookCommandHandlerTests
 {
-    private readonly IBookRepository _fakeBookRepository;
+   private readonly IBookRepository _fakeBookRepository;
     private readonly ICategoryService _fakeCategoryService;
     private readonly CreateBookCommandHandler _createBookCommandHandler;
 
@@ -36,15 +36,14 @@ public class CreateBookCommandHandlerTests
         };
 
         A.CallTo(() => _fakeCategoryService.GetCategoryAsync(createBookCommand.CategoryId))
-            .Returns(Result.Ok(new CategoryResult {Name = "Test Category"}));
+            .Returns(Result.Ok(new CategoryResult { Name = "Test Category" }));
 
         // Act
         var result = await _createBookCommandHandler.Handle(createBookCommand, CancellationToken.None);
 
         // Assert
         result.Success.Should().BeTrue();
-        A.CallTo(() => _fakeBookRepository.AddBook(createBookCommand.Title, createBookCommand.Author, createBookCommand.Description, createBookCommand.Price,
-                createBookCommand.CategoryId, createBookCommand.SellerId))
+        A.CallTo(() => _fakeBookRepository.CreateAsync(A<Webshop.BookStore.Domain.AggregateRoots.Book>.Ignored))
             .MustHaveHappenedOnceExactly();
     }
 
@@ -68,10 +67,9 @@ public class CreateBookCommandHandlerTests
         // Act
         var result = await _createBookCommandHandler.Handle(createBookCommand, CancellationToken.None);
 
-        // Arrange
+        // Assert
         result.Success.Should().BeFalse();
-        A.CallTo(() => _fakeBookRepository.AddBook(createBookCommand.Title, createBookCommand.Author, createBookCommand.Description, createBookCommand.Price,
-                createBookCommand.CategoryId, createBookCommand.SellerId))
+        A.CallTo(() => _fakeBookRepository.CreateAsync(A<Webshop.BookStore.Domain.AggregateRoots.Book>.Ignored))
             .MustNotHaveHappened();
     }
 
@@ -93,8 +91,7 @@ public class CreateBookCommandHandlerTests
             .Returns(Result.Ok(new CategoryResult { Name = "Test Category" }));
 
         var exceptionMessage = "Repository failed";
-        A.CallTo(() => _fakeBookRepository.AddBook(createBookCommand.Title, createBookCommand.Author, createBookCommand.Description, createBookCommand.Price,
-                createBookCommand.CategoryId, createBookCommand.SellerId))
+        A.CallTo(() => _fakeBookRepository.CreateAsync(A<Webshop.BookStore.Domain.AggregateRoots.Book>.Ignored))
             .Throws(new Exception(exceptionMessage));
 
         // Act
@@ -103,8 +100,7 @@ public class CreateBookCommandHandlerTests
         // Assert
         result.Success.Should().BeFalse();
         result.Error.Should().Be(Errors.General.UnspecifiedError(exceptionMessage));
-        A.CallTo(() => _fakeBookRepository.AddBook(createBookCommand.Title, createBookCommand.Author, createBookCommand.Description, createBookCommand.Price,
-                createBookCommand.CategoryId, createBookCommand.SellerId))
+        A.CallTo(() => _fakeBookRepository.CreateAsync(A<Webshop.BookStore.Domain.AggregateRoots.Book>.Ignored))
             .MustHaveHappenedOnceExactly();
     }
 }

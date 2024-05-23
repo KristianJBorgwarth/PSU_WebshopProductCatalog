@@ -1,15 +1,10 @@
-﻿using System.Reflection;
+﻿using Webshop.Application.Contracts.Persistence;
+using Webshop.BookStore.Application.Features.Book.Dtos;
 using Webshop.Domain.Common;
 
 namespace Webshop.BookStore.Application.Contracts.Persistence;
 
-public interface IBookRepository
+public interface IBookRepository : IRepository<Domain.AggregateRoots.Book>
 {
-    Task AddBook(string title, string author, string description, decimal price, int categoryId, Guid sellerId);
-    Task<Result> DeleteBook(int bookId);
-    Task<Result> UpdateBook(int bookId, string title, string author, string description, decimal price, int categoryId);
-    Task<Result> GetBookById(int bookId);
-    Task<Result> GetAllBooks();
-    Task<Result> GetBooksByCategory(int categoryId);
-    Task<Result> GetBooksBySeller(Guid sellerId);
+    Task<IEnumerable<BookDto>> GetBooksByCategory(int categoryId);
 }

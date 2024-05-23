@@ -1,4 +1,5 @@
 ﻿using Webshop.BookStore.Application.Contracts.Persistence;
+using Webshop.BookStore.Application.Features.Book.Dtos;
 using Webshop.BookStore.Domain.AggregateRoots;
 using Webshop.Bookstore.Persistence.Context;
 using Webshop.Data.Persistence;
@@ -15,47 +16,33 @@ public class BookRepository : IBookRepository
         _context = context;
     }
 
-    public async Task AddBook(string title, string author, string description, decimal price, int categoryId, Guid sellerId)
+    public async Task<IEnumerable<BookDto>> GetBooksByCategory(int categoryId)
     {
-        var book = new Book()
-        {
-            Title = title,
-            Author = author,
-            Description = description,
-            Price = price,
-            CategoryId = categoryId,
-            SellerId = sellerId
-        };
-        _context.Books.Add(book);
+        throw new NotImplementedException();
+    }
+
+    public async Task CreateAsync(Book entity)
+    {
+        _context.Books.Add(entity);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<Result> DeleteBook(int bookId)
+    public async Task DeleteAsync(int id)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Result> UpdateBook(int bookId, string title, string author, string description, decimal price, int categoryId)
+    public async Task<Book> GetById(int id)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Result> GetBookById(int bookId)
+    public async Task<IEnumerable<Book>> GetAll()
     {
         throw new NotImplementedException();
     }
 
-    public async Task<Result> GetAllBooks()
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<Result> GetBooksByCategory(int categoryId)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<Result> GetBooksBySeller(Guid sellerId)
+    public async Task UpdateAsync(Book entity)
     {
         throw new NotImplementedException();
     }

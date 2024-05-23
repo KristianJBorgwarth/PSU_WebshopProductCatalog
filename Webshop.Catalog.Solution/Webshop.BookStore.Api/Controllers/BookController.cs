@@ -23,6 +23,8 @@ public class BookController : BaseController
 
     [HttpPost]
     [Route("")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> CreateBook(CreateBookRequest request)
     {
         var command = _mapper.Map<CreateBookCommand>(request);
@@ -32,10 +34,15 @@ public class BookController : BaseController
 
     [HttpGet]
     [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]//Should we even do this?
     public async Task<ActionResult> GetBookByCategoryId(int id)
     {
         var query = new GetBooksByCategoryQuery() {CategoryId = id};
         var result = await _mediator.Send(query);
-        return result.Success ? Ok(result.Value) : BadRequest(result.Error);
+        
+        if (!result.Success) return BadRequest(result.Error);
+        return result.Value.Any() ? Ok(result.Value) : NoContent();
     }
 }
