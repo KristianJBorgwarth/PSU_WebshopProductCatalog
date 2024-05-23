@@ -30,7 +30,11 @@ public class BookStoreCustomerRepository : IBookStoreCustomerRepository
 
     public async Task<Result> DeleteCustomer(Guid customerId)
     {
-        throw new NotImplementedException();
+        BookstoreCustomer? customer = await _context.BookstoreCustomers.FindAsync(customerId);
+        if (customer == null) return Result.Fail(Errors.General.NotFound(customerId));
+        _context.BookstoreCustomers.Remove(customer);
+        await _context.SaveChangesAsync();
+        return Result.Ok();
     }
 
     public async Task<Result> UpdateCustomer(Guid customerId, bool isSeller, bool isBuyer)
