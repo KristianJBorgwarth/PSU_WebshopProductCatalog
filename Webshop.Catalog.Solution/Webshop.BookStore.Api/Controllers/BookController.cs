@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Webshop.BookStore.Application.Features.Book.Commands.CreateBook;
+using Webshop.BookStore.Application.Features.Book.Queries.GetBooksByCategory;
 using Webshop.BookStore.Application.Features.Book.Requests;
 using Webshop.Customer.Api.Controllers;
 
@@ -27,5 +28,14 @@ public class BookController : BaseController
         var command = _mapper.Map<CreateBookCommand>(request);
         var result = await _mediator.Send(command);
         return result.Success ? Ok() : BadRequest(result.Error);
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    public async Task<ActionResult> GetBookByCategoryId(int id)
+    {
+        var query = new GetBooksByCategoryQuery() {CategoryId = id};
+        var result = await _mediator.Send(query);
+        return result.Success ? Ok(result.Value) : BadRequest(result.Error);
     }
 }
