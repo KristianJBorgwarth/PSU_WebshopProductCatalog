@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
+using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.DeleteCustomer;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.UpdateCustomer;
 using Webshop.BookStore.Application.Features.Requests;
 using Webshop.Customer.Api.Controllers;
@@ -33,7 +34,7 @@ public class BookstoreCustomerController : BaseController
         return result.Success ? Ok() : BadRequest(result.Error);
     }
     [HttpPut]
-    [Route("update")]
+    [Route("Update")]
     public async Task<IActionResult> UpdateCustomer([FromBody] UpdateCustomerRequest request)
     {
         Console.WriteLine("Hej");
@@ -49,4 +50,15 @@ public class BookstoreCustomerController : BaseController
   "isBuyer": true
 }
     */
+
+
+    [HttpDelete]
+    [Route("Delete")]
+    public async Task<IActionResult> DeleteCustomer([FromBody] DeleteCustomerRequest request)
+    {
+        DeleteCustomerCommand command = _mapper.Map<DeleteCustomerCommand>(request);
+        Result result = await _mediator.Send(command);
+
+        return result.Success ? Ok() : BadRequest(result.Error);
+    }
 }
