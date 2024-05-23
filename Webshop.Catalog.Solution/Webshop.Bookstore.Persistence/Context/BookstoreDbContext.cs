@@ -24,9 +24,10 @@ public class BookstoreDbContext : DbContext
             entity.Property(b => b.Title).IsRequired();
             entity.Property(b => b.Author).IsRequired();
             entity.Property(b => b.Price).HasColumnType("decimal(18,2)");
-            entity.HasOne<BookstoreCustomer>()
+            entity.HasOne(b => b.Seller)
                 .WithMany()
-                .HasForeignKey(b => b.SellerId);
+                .HasForeignKey(b => b.SellerId)
+                .OnDelete(DeleteBehavior.Restrict);
         });
 
         modelBuilder.Entity<Order>(entity =>

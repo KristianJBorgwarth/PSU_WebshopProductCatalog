@@ -6,6 +6,7 @@ using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
 using Webshop.BookStore.Application.Profiles;
 using Webshop.BookStore.Application.Services;
+using Webshop.BookStore.Application.Services.CategoryService;
 using Webshop.Bookstore.Persistence.Context;
 using Webshop.BookStore.Application.Services.CustomerService;
 using Webshop.Bookstore.Persistence.Repositories;
@@ -57,7 +58,14 @@ builder.Services.AddHttpClient("CustomerServiceClient", (serviceProvider, client
     client.BaseAddress = new Uri(settings.CustomerServiceBaseUrl);
 });
 
+builder.Services.AddHttpClient("CategoryServiceClient", (serviceProvider, client) =>
+{
+    var settings = serviceProvider.GetRequiredService<IOptions<ExternalServiceSettings>>().Value;
+    client.BaseAddress = new Uri(settings.CategoryServiceBaseUrl);
+});
+
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 #endregion
 
 #region Database setup
@@ -70,6 +78,7 @@ builder.Services.AddDbContext<BookstoreDbContext>(options =>
 
 #region Repository setup
 builder.Services.AddScoped<IBookStoreCustomerRepository, BookStoreCustomerRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 #endregion
 
 builder.Services.AddControllers();

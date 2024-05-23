@@ -32,8 +32,8 @@ namespace Webshopt.Bookstore.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -151,11 +151,13 @@ namespace Webshopt.Bookstore.Persistence.Migrations
 
             modelBuilder.Entity("Webshop.BookStore.Domain.AggregateRoots.Book", b =>
                 {
-                    b.HasOne("Webshop.BookStore.Domain.AggregateRoots.BookstoreCustomer", null)
+                    b.HasOne("Webshop.BookStore.Domain.AggregateRoots.BookstoreCustomer", "Seller")
                         .WithMany()
                         .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("Webshop.BookStore.Domain.AggregateRoots.Order", b =>
