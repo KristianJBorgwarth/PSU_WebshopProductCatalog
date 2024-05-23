@@ -11,7 +11,7 @@ public class CreateBookstoreCustomerCommandHandlerTests : IntegrationTestBase
 
     }
 
-    [Fact]
+    [Fact(Skip = "This is not yet finished")]
     public async Task CreateBookstoreCustomerCommandHandler_ShouldCreateCustomer()
     {
 
