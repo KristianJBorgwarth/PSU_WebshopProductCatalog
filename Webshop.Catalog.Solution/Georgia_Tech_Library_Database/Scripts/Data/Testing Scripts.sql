@@ -4,7 +4,7 @@ join book on BooksLoaned.BookID = book.BookID
 order by BooksLoaned.BookID
 
 Select * From Book
-order by OnLoan
+where OnLoan = 1
 --------------------------------------------------------------------------------------------------------------------------------
 
 
