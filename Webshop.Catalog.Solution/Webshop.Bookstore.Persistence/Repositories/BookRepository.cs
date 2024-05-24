@@ -1,4 +1,5 @@
-﻿using Webshop.BookStore.Application.Contracts.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.Book.Dtos;
 using Webshop.BookStore.Domain.AggregateRoots;
 using Webshop.Bookstore.Persistence.Context;
@@ -16,9 +17,10 @@ public class BookRepository : IBookRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<BookDto>> GetBooksByCategory(int categoryId)
+    public async Task<Book[]> GetBooksByCategory(int categoryId)
     {
-        throw new NotImplementedException();
+        var books = await _context.Books.Where(c => c.CategoryId == categoryId).ToArrayAsync();
+        return books;
     }
 
     public async Task CreateAsync(Book entity)

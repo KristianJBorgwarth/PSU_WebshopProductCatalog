@@ -22,9 +22,8 @@ public class GetBooksByCategoryQueryHandler : IRequestHandler<GetBooksByCategory
         try
         {
             var books = await _bookRepository.GetBooksByCategory(request.CategoryId);
-            var result = new List<BookDto>();
-            //TODO: THIS SHOULD BE MAPPED!
-            return result;
+            var result = _mapper.Map<List<BookDto>>(books);
+            return Result.Ok(result);
         }
         catch(Exception ex)
         {

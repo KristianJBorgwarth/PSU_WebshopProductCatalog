@@ -32,7 +32,7 @@ public class CreateBookCommandHandlerTests
             Description = "Test Description",
             Price = 10,
             CategoryId = 1,
-            SellerId = Guid.NewGuid()
+            SellerId = 1
         };
 
         A.CallTo(() => _fakeCategoryService.GetCategoryAsync(createBookCommand.CategoryId))
@@ -58,7 +58,7 @@ public class CreateBookCommandHandlerTests
             Description = "Test Description",
             Price = 10,
             CategoryId = 1,
-            SellerId = Guid.NewGuid()
+            SellerId = 1
         };
 
         A.CallTo(() => _fakeCategoryService.GetCategoryAsync(createBookCommand.CategoryId))
@@ -84,7 +84,7 @@ public class CreateBookCommandHandlerTests
             Description = "Test Description",
             Price = 10,
             CategoryId = 1,
-            SellerId = Guid.NewGuid()
+            SellerId = 1
         };
 
         A.CallTo(() => _fakeCategoryService.GetCategoryAsync(createBookCommand.CategoryId))

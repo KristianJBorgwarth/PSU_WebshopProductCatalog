@@ -30,6 +30,8 @@ public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, Resul
                 Author = request.Author,
                 Price = request.Price,
                 CategoryId = request.CategoryId,
+                Description = request.Description,
+                SellerId = request.SellerId
             };
             await _bookRepository.CreateAsync(book);
         }

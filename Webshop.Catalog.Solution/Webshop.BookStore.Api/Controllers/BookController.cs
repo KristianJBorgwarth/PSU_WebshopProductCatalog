@@ -33,13 +33,13 @@ public class BookController : BaseController
     }
 
     [HttpGet]
-    [Route("{categoryid}")]
+    [Route("{categoryId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]//Should we even do this?
-    public async Task<ActionResult> GetBookByCategoryId(int id)
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> GetBookByCategoryId(int categoryId)
     {
-        var query = new GetBooksByCategoryQuery() {CategoryId = id};
+        var query = new GetBooksByCategoryQuery() {CategoryId = categoryId};
         var result = await _mediator.Send(query);
 
         if (!result.Success) return BadRequest(result.Error);
