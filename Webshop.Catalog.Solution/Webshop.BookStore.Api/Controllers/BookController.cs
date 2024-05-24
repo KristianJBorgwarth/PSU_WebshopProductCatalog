@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using Webshop.BookStore.Application.Features.Book.Commands.CreateBook;
+using Webshop.BookStore.Application.Features.Book.Queries.GetBooks;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBooksByCategory;
 using Webshop.BookStore.Application.Features.Book.Requests;
 using Webshop.Customer.Api.Controllers;
@@ -45,4 +47,18 @@ public class BookController : BaseController
         if (!result.Success) return BadRequest(result.Error);
         return result.Value.Any() ? Ok(result.Value) : NoContent();
     }
+
+    [HttpGet]
+    [Route("")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> GetBooks()
+    {
+        var result = await _mediator.Send(new GetBooksQuery());
+
+        if (!result.Success) return BadRequest(result.Error);
+        return result.Value.Any() ? Ok(result.Value) : NoContent();
+    }
+
 }
