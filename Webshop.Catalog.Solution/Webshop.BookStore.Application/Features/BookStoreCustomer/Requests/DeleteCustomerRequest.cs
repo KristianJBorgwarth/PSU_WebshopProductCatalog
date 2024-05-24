@@ -8,6 +8,6 @@ namespace Webshop.BookStore.Application.Features.Requests
 {
     public class DeleteCustomerRequest
     {
-        public required Guid CustomerId { get; set; }
+        public required int CustomerId { get; set; }
     }
 }

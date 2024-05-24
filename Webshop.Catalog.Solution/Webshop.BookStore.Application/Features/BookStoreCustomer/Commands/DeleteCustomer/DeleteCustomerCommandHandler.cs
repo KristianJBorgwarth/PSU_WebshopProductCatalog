@@ -16,8 +16,19 @@ namespace Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.Dele
 
         public async Task<Result> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
-            Result result = await _bookStoreCustomerRepository.DeleteCustomer(request.CustomerId);
-            return result.Success ? Result.Ok() : Result.Fail(result.Error);
+            try
+            {
+                var customer = await _bookStoreCustomerRepository.GetById(request.CustomerId);
+                if (customer == null) return Result.Fail(Errors.General.NotFound(request.CustomerId));
+
+                await _bookStoreCustomerRepository.DeleteAsync(customer.Id);
+                return Result.Ok();
+            }
+            catch (Exception e)
+            {
+                return Result.Fail(Errors.General.UnspecifiedError(e.Message));
+
+            }
         }
     }
 }

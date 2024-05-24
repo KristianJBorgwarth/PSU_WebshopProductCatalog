@@ -1,4 +1,5 @@
-﻿using Webshop.BookStore.Application.Contracts.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Domain.AggregateRoots;
 using Webshop.Bookstore.Persistence.Context;
 using Webshop.Domain.Common;
@@ -13,15 +14,6 @@ public class BookStoreCustomerRepository : IBookStoreCustomerRepository
         _context = context;
     }
 
-    public async Task<Result> DeleteCustomer(Guid customerId)
-    {
-        BookstoreCustomer? customer = await _context.BookstoreCustomers.FindAsync(customerId);
-        if (customer == null) return Result.Fail(Errors.General.NotFound(customerId));
-        _context.BookstoreCustomers.Remove(customer);
-        await _context.SaveChangesAsync();
-        return Result.Ok();
-    }
-
     public async Task CreateAsync(BookstoreCustomer entity)
     {
         _context.BookstoreCustomers.Add(entity);
@@ -30,7 +22,7 @@ public class BookStoreCustomerRepository : IBookStoreCustomerRepository
 
     public async Task DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        await _context.BookstoreCustomers.Where(c => c.Id == id).ExecuteDeleteAsync();
     }
 
     public async Task<BookstoreCustomer> GetById(int id)
