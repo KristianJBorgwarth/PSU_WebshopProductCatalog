@@ -23,6 +23,11 @@ public class BookRepository : IBookRepository
         return books;
     }
 
+    public async Task<Book[]> GetBooksBySeller(int sellerId)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task CreateAsync(Book entity)
     {
         _context.Books.Add(entity);
