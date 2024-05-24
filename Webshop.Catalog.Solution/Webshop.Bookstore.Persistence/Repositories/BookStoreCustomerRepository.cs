@@ -13,21 +13,6 @@ public class BookStoreCustomerRepository : IBookStoreCustomerRepository
         _context = context;
     }
 
-    public async Task<Result> AddCustomer(int customerId, string name, bool isSeller, bool isBuyer)
-    {
-        BookstoreCustomer customer = new()
-        {
-            Name = name,
-            BaseCustomeerId = customerId,
-            IsSeller = isSeller,
-            IsBuyer = isBuyer
-        };
-
-        _context.BookstoreCustomers.Add(customer);
-        await _context.SaveChangesAsync();
-        return Result.Ok();
-    }
-
     public async Task<Result> DeleteCustomer(Guid customerId)
     {
         BookstoreCustomer? customer = await _context.BookstoreCustomers.FindAsync(customerId);
@@ -48,5 +33,31 @@ public class BookStoreCustomerRepository : IBookStoreCustomerRepository
         customer.IsBuyer = isBuyer;
         await _context.SaveChangesAsync();
         return Result.Ok();
+    }
+
+    public async Task CreateAsync(BookstoreCustomer entity)
+    {
+        _context.BookstoreCustomers.Add(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<BookstoreCustomer> GetById(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IEnumerable<BookstoreCustomer>> GetAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task UpdateAsync(BookstoreCustomer entity)
+    {
+        throw new NotImplementedException();
     }
 }

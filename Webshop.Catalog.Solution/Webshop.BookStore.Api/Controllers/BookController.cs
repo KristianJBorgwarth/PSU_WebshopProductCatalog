@@ -33,7 +33,7 @@ public class BookController : BaseController
     }
 
     [HttpGet]
-    [Route("{id}")]
+    [Route("{categoryid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]//Should we even do this?
@@ -41,7 +41,7 @@ public class BookController : BaseController
     {
         var query = new GetBooksByCategoryQuery() {CategoryId = id};
         var result = await _mediator.Send(query);
-        
+
         if (!result.Success) return BadRequest(result.Error);
         return result.Value.Any() ? Ok(result.Value) : NoContent();
     }
