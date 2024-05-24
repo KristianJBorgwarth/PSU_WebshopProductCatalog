@@ -7,5 +7,5 @@ public class CreateBookRequest
     public string Description { get; set; }
     public decimal Price { get; set; }
     public int CategoryId { get; set; }
-    public Guid SellerId { get; set; }
+    public int SellerId { get; set; }
 }

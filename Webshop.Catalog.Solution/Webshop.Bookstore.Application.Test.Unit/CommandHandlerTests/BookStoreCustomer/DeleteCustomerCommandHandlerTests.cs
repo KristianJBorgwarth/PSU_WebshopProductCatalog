@@ -1,71 +1,97 @@
 ﻿using FakeItEasy;
 using FluentAssertions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.DeleteCustomer;
-using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.UpdateCustomer;
 using Webshop.Domain.Common;
+using Xunit;
 
 namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.BookStoreCustomer
 {
     public class DeleteCustomerCommandHandlerTests
     {
         private readonly DeleteCustomerCommandHandler _handler;
-        private readonly IBookStoreCustomerRepository fake_bookStoreCustomerRepository;
+        private readonly IBookStoreCustomerRepository _fakeBookStoreCustomerRepository;
 
         public DeleteCustomerCommandHandlerTests()
         {
-            fake_bookStoreCustomerRepository = A.Fake<IBookStoreCustomerRepository>();
-            _handler = new DeleteCustomerCommandHandler(fake_bookStoreCustomerRepository);
+            _fakeBookStoreCustomerRepository = A.Fake<IBookStoreCustomerRepository>();
+            _handler = new DeleteCustomerCommandHandler(_fakeBookStoreCustomerRepository);
         }
 
         [Fact]
-        public async void GivenValidCommand_ShouldReturn_ResultOk()
+        public async Task GivenValidCommand_ShouldReturn_ResultOk()
         {
-            //Arrange
-            Guid validId = Guid.NewGuid();
-            DeleteCustomerCommand cmd = new DeleteCustomerCommand()
-            {
-                CustomerId = validId
-            };
-            A.CallTo(() => fake_bookStoreCustomerRepository.DeleteCustomer(cmd.CustomerId))
-                .Returns(Task.FromResult(Result.Ok()));
+            // Arrange
+            var validId = 1;
+            var cmd = new DeleteCustomerCommand { CustomerId = validId };
+            var existingCustomer = new Webshop.BookStore.Domain.AggregateRoots.BookstoreCustomer { Id = validId };
 
-            //Act
+            A.CallTo(() => _fakeBookStoreCustomerRepository.GetById(validId))
+                .Returns(existingCustomer);
+            A.CallTo(() => _fakeBookStoreCustomerRepository.DeleteAsync(validId))
+                .Returns(Task.CompletedTask);
+
+            // Act
             var result = await _handler.Handle(cmd, CancellationToken.None);
 
             // Assert
-            A.CallTo(() => fake_bookStoreCustomerRepository.DeleteCustomer(cmd.CustomerId))
+            A.CallTo(() => _fakeBookStoreCustomerRepository.GetById(validId))
+                .MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeBookStoreCustomerRepository.DeleteAsync(validId))
                 .MustHaveHappenedOnceExactly();
             result.Success.Should().BeTrue();
         }
 
         [Fact]
-        public async void GivenInvalidCommand_ShouldReturn_ResultFail()
+        public async Task GivenInvalidCommand_ShouldReturn_ResultFail()
         {
-            //Arrange
-            Guid invalidId = Guid.NewGuid();
-            DeleteCustomerCommand cmd = new DeleteCustomerCommand()
-            {
-                CustomerId = invalidId
-            };
-            A.CallTo(() => fake_bookStoreCustomerRepository.DeleteCustomer(cmd.CustomerId))
-                .Returns(Task.FromResult(Result.Fail(Errors.General.UnspecifiedError("Not working"))));
+            // Arrange
+            var invalidId = 1;
+            var cmd = new DeleteCustomerCommand { CustomerId = invalidId };
 
-            //Act
+            A.CallTo(() => _fakeBookStoreCustomerRepository.GetById(invalidId))
+                .Returns(Task.FromResult<Webshop.BookStore.Domain.AggregateRoots.BookstoreCustomer>(null));
+
+            // Act
             var result = await _handler.Handle(cmd, CancellationToken.None);
 
-            //Assert
-            A.CallTo(() => fake_bookStoreCustomerRepository.DeleteCustomer(cmd.CustomerId))
+            // Assert
+            A.CallTo(() => _fakeBookStoreCustomerRepository.GetById(invalidId))
                 .MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeBookStoreCustomerRepository.DeleteAsync(invalidId))
+                .MustNotHaveHappened();
             result.Success.Should().BeFalse();
-            result.Error.Message.Should().Be("Not working");
-
+            result.Error.Message.Should().Contain("Could not find entity with ID 1.");
         }
 
+        [Fact]
+        public async Task Handle_RepositoryThrowsException_ShouldReturn_ResultFail()
+        {
+            // Arrange
+            var validId = 1;
+            var cmd = new DeleteCustomerCommand { CustomerId = validId };
+            var existingCustomer = new Webshop.BookStore.Domain.AggregateRoots.BookstoreCustomer { Id = validId };
+
+            A.CallTo(() => _fakeBookStoreCustomerRepository.GetById(validId))
+                .Returns(existingCustomer);
+
+            var exceptionMessage = "Repository failed";
+            A.CallTo(() => _fakeBookStoreCustomerRepository.DeleteAsync(validId))
+                .Throws(new Exception(exceptionMessage));
+
+            // Act
+            var result = await _handler.Handle(cmd, CancellationToken.None);
+
+            // Assert
+            result.Success.Should().BeFalse();
+            result.Error.Message.Should().Contain(exceptionMessage);
+            A.CallTo(() => _fakeBookStoreCustomerRepository.GetById(validId))
+                .MustHaveHappenedOnceExactly();
+            A.CallTo(() => _fakeBookStoreCustomerRepository.DeleteAsync(validId))
+                .MustHaveHappenedOnceExactly();
+        }
     }
 }

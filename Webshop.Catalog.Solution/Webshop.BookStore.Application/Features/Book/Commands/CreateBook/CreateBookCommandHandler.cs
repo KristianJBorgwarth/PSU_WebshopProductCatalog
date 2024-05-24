@@ -24,7 +24,16 @@ public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, Resul
 
         try
         {
-            await _bookRepository.AddBook(request.Title, request.Author, request.Description, request.Price, request.CategoryId, request.SellerId);
+            var book = new Domain.AggregateRoots.Book
+            {
+                Title = request.Title,
+                Author = request.Author,
+                Price = request.Price,
+                CategoryId = request.CategoryId,
+                Description = request.Description,
+                SellerId = request.SellerId
+            };
+            await _bookRepository.CreateAsync(book);
         }
         catch (Exception e)
         {

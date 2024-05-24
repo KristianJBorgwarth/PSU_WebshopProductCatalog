@@ -10,6 +10,6 @@ namespace Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.Dele
 {
     public class DeleteCustomerCommand : IRequest<Result>
     {
-        public Guid CustomerId { get; set; }
+        public int CustomerId { get; set; }
     }
 }

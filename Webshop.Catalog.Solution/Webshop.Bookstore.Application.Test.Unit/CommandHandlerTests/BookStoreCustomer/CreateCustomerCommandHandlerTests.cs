@@ -4,6 +4,8 @@ using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
 using Webshop.BookStore.Application.Services.CustomerService;
 using Webshop.Domain.Common;
+using Webshop.BookStore.Domain.AggregateRoots;
+using Xunit;
 
 namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.BookStoreCustomer;
 
@@ -21,10 +23,10 @@ public class CreateCustomerCommandHandlerTests
     }
 
     [Fact]
-    public async void GivenValidCommand_ShouldReturn_ResultOk()
+    public async Task GivenValidCommand_ShouldReturn_ResultOk()
     {
         // Arrange
-        CreateCustomerCommand cmd = new()
+        var cmd = new CreateCustomerCommand
         {
             CustomerId = 4,
             IsBuyer = true,
@@ -36,21 +38,34 @@ public class CreateCustomerCommandHandlerTests
         A.CallTo(() => _fakeCustomerService.GetCustomerAsync(cmd.CustomerId))
             .Returns(customerResult);
 
+        BookstoreCustomer capturedCustomer = null;
+        A.CallTo(() => _fakeBookStoreCustomerRepository.CreateAsync(A<BookstoreCustomer>.Ignored))
+            .Invokes(call => capturedCustomer = call.GetArgument<BookstoreCustomer>(0));
+
         // Act
         var result = await _cmdHandler.Handle(cmd, new CancellationToken());
 
         // Assert
-        A.CallTo(() => _fakeBookStoreCustomerRepository.AddCustomer(cmd.CustomerId, "Eric", cmd.IsSeller, cmd.IsBuyer))
-            .MustHaveHappenedOnceExactly();
-
         result.Success.Should().BeTrue();
+        capturedCustomer.Should().NotBeNull();
+        capturedCustomer.Name.Should().Be("Eric");
+        capturedCustomer.BaseCustomeerId.Should().Be(cmd.CustomerId);
+        capturedCustomer.IsSeller.Should().Be(cmd.IsSeller);
+        capturedCustomer.IsBuyer.Should().Be(cmd.IsBuyer);
+
+        A.CallTo(() => _fakeBookStoreCustomerRepository.CreateAsync(A<BookstoreCustomer>.That.Matches(b =>
+                b.Name == "Eric" &&
+                b.BaseCustomeerId == cmd.CustomerId &&
+                b.IsSeller == cmd.IsSeller &&
+                b.IsBuyer == cmd.IsBuyer)))
+            .MustHaveHappenedOnceExactly();
     }
 
     [Fact]
-    public async void GivenInvalidCommand_ShouldReturn_ResultFail()
+    public async Task GivenInvalidCommand_ShouldReturn_ResultFail()
     {
-        //Arrange
-        CreateCustomerCommand cmd = new()
+        // Arrange
+        var cmd = new CreateCustomerCommand
         {
             CustomerId = 42069,
             IsBuyer = true,
@@ -60,12 +75,14 @@ public class CreateCustomerCommandHandlerTests
         A.CallTo(() => _fakeCustomerService.GetCustomerAsync(cmd.CustomerId))
             .Returns(Result.Fail<CustomerResult>(Errors.General.UnspecifiedError("This shit failed")));
 
-        //Act
+        // Act
         var result = await _cmdHandler.Handle(cmd, new CancellationToken());
 
-        //Assert
-        A.CallTo(() => _fakeBookStoreCustomerRepository.AddCustomer(cmd.CustomerId, "Eric", cmd.IsSeller, cmd.IsBuyer)).MustNotHaveHappened();
+        // Assert
         result.Success.Should().BeFalse();
         result.Error.Message.Should().Contain("This shit failed");
+
+        A.CallTo(() => _fakeBookStoreCustomerRepository.CreateAsync(A<BookstoreCustomer>.Ignored))
+            .MustNotHaveHappened();
     }
 }

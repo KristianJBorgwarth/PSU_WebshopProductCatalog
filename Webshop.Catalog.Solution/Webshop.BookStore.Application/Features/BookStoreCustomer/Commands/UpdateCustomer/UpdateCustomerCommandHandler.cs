@@ -20,9 +20,21 @@ namespace Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.Upda
 
         public async Task<Result> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-            Result result = await _bookStoreCustomerRepository.UpdateCustomer(request.Id, request.IsSeller, request.IsBuyer);
-            if (!result.Success) return Result.Fail(result.Error);
-            return Result.Ok();
+            try
+            {
+                var bc = await _bookStoreCustomerRepository.GetById(request.Id);
+                if (bc == null) return Result.Fail(Errors.General.NotFound(request.Id));
+
+                bc.IsBuyer = request.IsBuyer;
+                bc.IsSeller = request.IsSeller;
+
+                await _bookStoreCustomerRepository.UpdateAsync(bc);
+                return Result.Ok();
+            }
+            catch(Exception ex)
+            {
+                return Result.Fail(Errors.General.UnspecifiedError(ex.Message));
+            }
         }
     }
 }

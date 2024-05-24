@@ -44,7 +44,8 @@ builder.Services.AddMediatR(cfg =>
 
 builder.Services.AddAutoMapper(cfg =>
 {
-    cfg.AddMaps(typeof(RequestMappingProfile).Assembly);;
+    cfg.AddMaps(typeof(RequestMappingProfile).Assembly);
+    cfg.AddMaps(typeof(DtoMappingProfile).Assembly);
 });
 #endregion
 

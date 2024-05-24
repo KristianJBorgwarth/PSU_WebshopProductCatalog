@@ -24,9 +24,11 @@ namespace Webshopt.Bookstore.Persistence.Migrations
 
             modelBuilder.Entity("Webshop.BookStore.Domain.AggregateRoots.Book", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Author")
                         .IsRequired()
@@ -48,8 +50,8 @@ namespace Webshopt.Bookstore.Persistence.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("SellerId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("SellerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -64,9 +66,11 @@ namespace Webshopt.Bookstore.Persistence.Migrations
 
             modelBuilder.Entity("Webshop.BookStore.Domain.AggregateRoots.BookstoreCustomer", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BaseCustomeerId")
                         .HasColumnType("int");
@@ -94,12 +98,14 @@ namespace Webshopt.Bookstore.Persistence.Migrations
 
             modelBuilder.Entity("Webshop.BookStore.Domain.AggregateRoots.Order", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("BuyerId")
-                        .HasColumnType("uniqueidentifier");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BuyerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -122,8 +128,8 @@ namespace Webshopt.Bookstore.Persistence.Migrations
 
             modelBuilder.Entity("Webshop.BookStore.Domain.AggregateRoots.OrderItem", b =>
                 {
-                    b.Property<Guid>("BookId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Id")
                         .HasColumnType("int");

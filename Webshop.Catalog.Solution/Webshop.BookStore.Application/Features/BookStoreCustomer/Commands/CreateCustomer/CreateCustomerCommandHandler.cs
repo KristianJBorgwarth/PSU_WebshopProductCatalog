@@ -22,8 +22,22 @@ public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerComman
 
       if (!result.Success) return Result.Fail(result.Error);
 
-      await _bookStoreCustomerRepository.AddCustomer(request.CustomerId, result.Value.Name, request.IsSeller, request.IsBuyer);
+      try
+      {
+        var customer = new Domain.AggregateRoots.BookstoreCustomer
+        {
+          Name = result.Value.Name,
+          BaseCustomeerId = request.CustomerId,
+          IsSeller = request.IsSeller,
+          IsBuyer = request.IsBuyer
+        };
 
+        await _bookStoreCustomerRepository.CreateAsync(customer);
+      }
+      catch (Exception e)
+      {
+        return Result.Fail(Errors.General.UnspecifiedError(e.Message));
+      }
       return Result.Ok();
     }
 }

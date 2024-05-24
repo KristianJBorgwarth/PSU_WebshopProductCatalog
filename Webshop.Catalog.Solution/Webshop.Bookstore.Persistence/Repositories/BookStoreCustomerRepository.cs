@@ -1,4 +1,5 @@
-﻿using Webshop.BookStore.Application.Contracts.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Domain.AggregateRoots;
 using Webshop.Bookstore.Persistence.Context;
 using Webshop.Domain.Common;
@@ -13,40 +14,31 @@ public class BookStoreCustomerRepository : IBookStoreCustomerRepository
         _context = context;
     }
 
-    public async Task<Result> AddCustomer(int customerId, string name, bool isSeller, bool isBuyer)
+    public async Task CreateAsync(BookstoreCustomer entity)
     {
-        BookstoreCustomer customer = new()
-        {
-            Name = name,
-            BaseCustomeerId = customerId,
-            IsSeller = isSeller,
-            IsBuyer = isBuyer
-        };
-
-        _context.BookstoreCustomers.Add(customer);
+        _context.BookstoreCustomers.Add(entity);
         await _context.SaveChangesAsync();
-        return Result.Ok();
     }
 
-    public async Task<Result> DeleteCustomer(Guid customerId)
+    public async Task DeleteAsync(int id)
     {
-        BookstoreCustomer? customer = await _context.BookstoreCustomers.FindAsync(customerId);
-        if (customer == null) return Result.Fail(Errors.General.NotFound(customerId));
-        _context.BookstoreCustomers.Remove(customer);
-        await _context.SaveChangesAsync();
-        return Result.Ok();
+        await _context.BookstoreCustomers.Where(c => c.Id == id).ExecuteDeleteAsync();
     }
 
-    public async Task<Result> UpdateCustomer(Guid customerId, bool isSeller, bool isBuyer)
+    public async Task<BookstoreCustomer> GetById(int id)
     {
-        BookstoreCustomer? customer = _context.BookstoreCustomers.Find(customerId);
-        if (customer == null)
-        {
-            return Result.Fail(Errors.General.NotFound(customerId));
-        }
-        customer.IsSeller = isSeller;
-        customer.IsBuyer = isBuyer;
+        var cm = await _context.BookstoreCustomers.FindAsync(id);
+        return cm;
+    }
+
+    public async Task<IEnumerable<BookstoreCustomer>> GetAll()
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task UpdateAsync(BookstoreCustomer entity)
+    {
+        _context.BookstoreCustomers.Update(entity);
         await _context.SaveChangesAsync();
-        return Result.Ok();
     }
 }

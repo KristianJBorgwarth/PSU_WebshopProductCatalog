@@ -37,20 +37,11 @@ public class BookstoreCustomerController : BaseController
     [Route("Update")]
     public async Task<IActionResult> UpdateCustomer([FromBody] UpdateCustomerRequest request)
     {
-        Console.WriteLine("Hej");
-        UpdateCustomerCommand command = _mapper.Map<UpdateCustomerCommand>(request); 
+        UpdateCustomerCommand command = _mapper.Map<UpdateCustomerCommand>(request);
         Result result = await _mediator.Send(command);
 
         return result.Success ? Ok() : BadRequest(result.Error);
     }
-    /*
-     * {
-  "id": "4CCC108E-9DCA-4C82-9A54-08DC7B0E6DBF6",
-  "isSeller": false,
-  "isBuyer": true
-}
-    */
-
 
     [HttpDelete]
     [Route("Delete")]
