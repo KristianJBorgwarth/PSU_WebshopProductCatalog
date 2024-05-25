@@ -19,6 +19,18 @@ public class GetBookQueryHandler : IRequestHandler<GetBookQuery, Result<BookDto>
 
     public async Task<Result<BookDto>> Handle(GetBookQuery request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var book = await _bookRepository.GetById(request.BookId);
+
+            if (book == null) return Result.Fail<BookDto>(Errors.General.NotFound(request.BookId));
+
+            var bookDto = _mapper.Map<BookDto>(book);
+            return Result.Ok(bookDto);
+        }
+        catch (Exception e)
+        {
+            return Result.Fail<BookDto>(Errors.General.UnspecifiedError(e.Message));
+        }
     }
 }

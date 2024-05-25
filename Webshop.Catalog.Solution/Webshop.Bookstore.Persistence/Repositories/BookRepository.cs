@@ -41,7 +41,8 @@ public class BookRepository : IBookRepository
 
     public async Task<Book> GetById(int id)
     {
-        throw new NotImplementedException();
+        var book = await _context.Books.FindAsync(id);
+        return book;
     }
 
     public async Task<IEnumerable<Book>> GetAll()

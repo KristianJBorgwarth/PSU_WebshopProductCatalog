@@ -37,7 +37,7 @@ public class BookController : BaseController
     }
 
     [HttpGet]
-    [Route("{categoryId}")]
+    [Route("category/{categoryId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -68,10 +68,9 @@ public class BookController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<IActionResult> GetBookById([FromQuery] GetBookRequest request)
+    public async Task<IActionResult> GetBookById(int id)
     {
-        var query = _mapper.Map<GetBookQuery>(request);
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(new GetBookQuery(){BookId = id});
 
         if (!result.Success) return BadRequest(result.Error);
         return result.Value != null ? Ok(result.Value) : NoContent();
