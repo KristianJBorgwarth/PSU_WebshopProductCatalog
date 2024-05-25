@@ -10,6 +10,7 @@ using Webshop.Customer.Api.Controllers;
 
 namespace Webshop.BookStore.Api.Controllers;
 
+[Route("api/bookstore/book")]
 public class BookController : BaseController
 {
     private readonly IMediator _mediator;
