@@ -33,7 +33,8 @@ public class BookStoreCustomerRepository : IBookStoreCustomerRepository
 
     public async Task<IEnumerable<BookstoreCustomer>> GetAll()
     {
-        throw new NotImplementedException();
+        var customers = await _context.BookstoreCustomers.ToArrayAsync();
+        return customers;
     }
 
     public async Task UpdateAsync(BookstoreCustomer entity)

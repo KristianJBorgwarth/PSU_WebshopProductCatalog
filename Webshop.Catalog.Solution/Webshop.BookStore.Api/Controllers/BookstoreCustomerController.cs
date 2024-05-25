@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.DeleteCustomer;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.UpdateCustomer;
+using Webshop.BookStore.Application.Features.BookStoreCustomer.Queries.GetBookStoreCustomers;
 using Webshop.BookStore.Application.Features.Requests;
 using Webshop.Customer.Api.Controllers;
 using Webshop.Domain.Common;
@@ -51,5 +52,17 @@ public class BookstoreCustomerController : BaseController
         Result result = await _mediator.Send(command);
 
         return result.Success ? Ok() : BadRequest(result.Error);
+    }
+    [HttpGet]
+    [Route("")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> GetBookStoreCustomers()
+    {
+        var result = await _mediator.Send(new GetBookStoreCustomersQuery());
+        
+        if (!result.Success) return BadRequest(result.Error);
+        return result.Value.Any() ? Ok(result.Value) : NoContent();
     }
 }
