@@ -19,6 +19,15 @@ public class GetBooksBySellerQueryHandler : IRequestHandler<GetBooksBySellerQuer
 
     public async Task<Result<List<BookDto>>> Handle(GetBooksBySellerQuery request, CancellationToken cancellationToken)
     {
-
+        try
+        {
+            var books = await _bookRepository.GetBooksBySeller(request.SellerId);
+            var result = _mapper.Map<List<BookDto>>(books);
+            return Result.Ok(result);
+        }
+        catch (Exception e)
+        {
+            return Result.Fail<List<BookDto>>(Errors.General.UnspecifiedError(e.Message));
+        }
     }
 }

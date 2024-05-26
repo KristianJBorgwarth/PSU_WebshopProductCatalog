@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 using Webshop.BookStore.Application.Features.Book.Commands.CreateBook;
 using Webshop.BookStore.Application.Features.Book.Commands.DeleteBook;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBook;
@@ -17,8 +16,8 @@ namespace Webshop.BookStore.Api.Controllers;
 public class BookController : BaseController
 {
     private readonly IMediator _mediator;
-    private readonly ILogger<BookController> _logger;
     private readonly IMapper _mapper;
+    private readonly ILogger<BookController> _logger;
 
     public BookController(IMediator mediator, ILogger<BookController> logger, IMapper mapper)
     {
@@ -78,17 +77,6 @@ public class BookController : BaseController
         return result.Value != null ? Ok(result.Value) : NoContent();
     }
 
-    [HttpDelete]
-    [Route("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> DeleteBook(int id)
-    {
-        var command = new DeleteBookCommand() {BookId = id};
-        var result = await _mediator.Send(command);
-        return result.Success ? Ok() : BadRequest(result.Error);
-    }
-
     [HttpGet]
     [Route("seller/{sellerId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -103,4 +91,14 @@ public class BookController : BaseController
         return result.Value.Any() ? Ok(result.Value) : NoContent();
     }
 
+    [HttpDelete]
+    [Route("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult> DeleteBook(int id)
+    {
+        var command = new DeleteBookCommand() {BookId = id};
+        var result = await _mediator.Send(command);
+        return result.Success ? Ok() : BadRequest(result.Error);
+    }
 }

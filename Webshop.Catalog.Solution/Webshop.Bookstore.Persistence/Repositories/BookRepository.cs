@@ -25,7 +25,8 @@ public class BookRepository : IBookRepository
 
     public async Task<Book[]> GetBooksBySeller(int sellerId)
     {
-        throw new NotImplementedException();
+        var books = await _context.Books.Where(c => c.SellerId == sellerId).ToArrayAsync();
+        return books;
     }
 
     public async Task CreateAsync(Book entity)
