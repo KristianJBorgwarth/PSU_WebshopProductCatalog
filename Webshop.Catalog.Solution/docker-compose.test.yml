@@ -20,7 +20,7 @@ services:
       - 8081:80
       - 5341:5341
     networks:
-      - backtier
+      - testbacktier
     environment:
       - ACCEPT_EULA=Y
   smtp4dev:
@@ -31,7 +31,7 @@ services:
       - 8082:80
       - 26:25
     networks:
-      - backtier
+      - testbacktier
   paymentapi:
    # the payment API
     container_name: webshop.payment
@@ -40,7 +40,7 @@ services:
     ports:
       - 8083:80
     networks:
-      - backtier
+      - testbacktier
   catalogapi:
   # the catalog API
     container_name: webshop.catalog
@@ -49,7 +49,7 @@ services:
     ports:
         - 8084:80
     networks:
-        - backtier
+        - testbacktier
   customerapi:
   # the customer API
     container_name: webshop.customer
@@ -58,7 +58,7 @@ services:
     ports:
         - 8085:80
     networks:
-        - backtier
+        - testbacktier
   sqlexpress:
   #the sql server
     container_name: webshopdatabase
@@ -73,10 +73,10 @@ services:
     volumes:
         - ./data:/var/opt/mssql/data
     networks:
-        - backtier
+        - testbacktier
 networks:
   # The presence of these objects is sufficient to define them
-  backtier: {}
+  testbacktier: {}
 
 
 

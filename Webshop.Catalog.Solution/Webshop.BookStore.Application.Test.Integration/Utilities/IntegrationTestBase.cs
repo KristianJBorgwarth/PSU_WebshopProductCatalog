@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Webshop.Bookstore.Persistence.Context;
 
 namespace Webshop.BookStore.Application.Test.Integration.Utilities;
@@ -11,6 +10,7 @@ public class IntegrationTestBase : IDisposable
 {
     protected IntegrationTestFactory<Program, BookstoreDbContext> Factory { get; private set; }
     protected BookstoreDbContext Db { get; private set; }
+
     public IntegrationTestBase(IntegrationTestFactory<Program, BookstoreDbContext> factory)
     {
         Factory = factory;
@@ -19,8 +19,11 @@ public class IntegrationTestBase : IDisposable
         Db.Database.EnsureCreated();
     }
 
-    public void Dispose()
+    public virtual void Dispose()
     {
         Db.BookstoreCustomers.ExecuteDelete();
+        Db.Books.ExecuteDelete();
+        Db.Orders.ExecuteDelete();
+        Db.OrderItems.ExecuteDelete();
     }
 }

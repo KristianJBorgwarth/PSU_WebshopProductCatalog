@@ -33,4 +33,8 @@
       <ProjectReference Include="..\Webshop.Bookstore.Persistence\Webshop.Bookstore.Persistence.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="BookstoreCustomer\Endpoint\" />
+    </ItemGroup>
+
 </Project>
