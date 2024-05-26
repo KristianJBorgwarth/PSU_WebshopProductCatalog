@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Webshop.BookStore.Application.Features.Book.Commands.CreateBook;
@@ -9,6 +10,7 @@ using Webshop.BookStore.Application.Features.Book.Queries.GetBooks;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBooksByCategory;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBooksBySeller;
 using Webshop.BookStore.Application.Features.Book.Requests;
+using Webshop.BookStore.Application.Features.Requests;
 using Webshop.Customer.Api.Controllers;
 
 namespace Webshop.BookStore.Api.Controllers;
@@ -31,7 +33,7 @@ public class BookController : BaseController
     [Route("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> CreateBook(CreateBookRequest request)
+    public async Task<IActionResult> CreateBook(CreateBookRequest request)
     {
         var command = _mapper.Map<CreateBookCommand>(request);
         var result = await _mediator.Send(command);
@@ -43,7 +45,7 @@ public class BookController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<ActionResult> GetBookByCategoryId(int categoryId)
+    public async Task<IActionResult> GetBookByCategoryId(int categoryId)
     {
         var query = new GetBooksByCategoryQuery() {CategoryId = categoryId};
         var result = await _mediator.Send(query);
@@ -83,7 +85,7 @@ public class BookController : BaseController
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    public async Task<ActionResult> GetBookBySellerId(int sellerId)
+    public async Task<IActionResult> GetBookBySellerId(int sellerId)
     {
         var query = new GetBooksBySellerQuery {SellerId = sellerId};
         var result = await _mediator.Send(query);
@@ -95,18 +97,28 @@ public class BookController : BaseController
     [Route("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> UpdateBook(int id, UpdateBookRequest request)
+    public async Task<IActionResult> UpdateBook([FromBody]UpdateBookRequest request)
     {
-        var command = _mapper.Map<UpdateBookCommand>(request);
-        var result = await _mediator.Send(command);
-        return result.Success ? Ok() : BadRequest(result.Error);
+        UpdateBookRequest.Validator validator = new();
+        var result = validator.Validate(request);
+        if(result.IsValid)
+        {
+            var command = _mapper.Map<UpdateBookCommand>(request);
+            var updateResult = await _mediator.Send(command);
+            return updateResult.Success ? Ok(updateResult) : Error(updateResult.Error);
+        }
+        else
+        {
+            _logger.LogError(string.Join(",", result.Errors.Select(x => x.ErrorMessage)));
+            return Error(result.Errors);
+        }
     }
 
     [HttpDelete]
     [Route("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult> DeleteBook(int id)
+    public async Task<IActionResult> DeleteBook(int id)
     {
         var command = new DeleteBookCommand{BookId = id};
         var result = await _mediator.Send(command);

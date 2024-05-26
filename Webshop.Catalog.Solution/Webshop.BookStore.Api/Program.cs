@@ -1,13 +1,10 @@
 using System.Reflection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Serilog;
-using Webshop.BookStore.Application.Behaviour;
 using Webshop.BookStore.Application.Contracts.Persistence;
-using Webshop.BookStore.Application.Features.Book.Commands.UpdateBook;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
 using Webshop.BookStore.Application.Profiles;
 using Webshop.BookStore.Application.Services;
@@ -53,10 +50,8 @@ builder.Host.UseSerilog();
 
 builder.Services.AddMediatR(cfg =>
 {
-    cfg.RegisterServicesFromAssemblyContaining(typeof(CreateCustomerCommand));
+    cfg.RegisterServicesFromAssembly(Assembly.Load("Webshop.BookStore.Application"));
 });
-
-builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 #endregion
 
@@ -64,8 +59,7 @@ builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavi
 
 builder.Services.AddAutoMapper(cfg =>
 {
-    cfg.AddMaps(typeof(RequestMappingProfile).Assembly);
-    cfg.AddMaps(typeof(DtoMappingProfile).Assembly);
+    cfg.AddMaps(Assembly.Load("Webshop.BookStore.Application"));
 });
 #endregion
 
@@ -97,12 +91,10 @@ builder.Services.AddDbContext<BookstoreDbContext>(options =>
 
 #endregion
 
-#region FluentValidation setup
-builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
-builder.Services.AddValidatorsFromAssembly(Assembly.Load("Webshop.BookStore.Application"));
-// Explicitly register the UpdateBookCommandValidator
-builder.Services.AddTransient<IValidator<UpdateBookCommand>, UpdateBookCommandValidator>();
-#endregion
+// #region FluentValidation setup
+// builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+// builder.Services.AddValidatorsFromAssembly(Assembly.Load("Webshop.BookStore.Application"));
+// #endregion
 
 #region Repository setup
 builder.Services.AddScoped<IBookStoreCustomerRepository, BookStoreCustomerRepository>();
