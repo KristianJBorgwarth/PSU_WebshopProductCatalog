@@ -54,6 +54,7 @@ public class BookRepository : IBookRepository
 
     public async Task UpdateAsync(Book entity)
     {
-        throw new NotImplementedException();
+        _context.Books.Update(entity);
+        await _context.SaveChangesAsync();
     }
 }

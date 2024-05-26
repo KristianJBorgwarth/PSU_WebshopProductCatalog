@@ -7,7 +7,7 @@ using Webshop.BookStore.Application.Features.Book.Requests;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.DeleteCustomer;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.UpdateCustomer;
-using Webshop.BookStore.Application.Features.Requests;
+using Webshop.BookStore.Application.Features.BookStoreCustomer.Requests;
 
 namespace Webshop.BookStore.Application.Profiles;
 
@@ -22,7 +22,6 @@ public class RequestMappingProfile : Profile
 
         // Book
         CreateMap<CreateBookRequest, CreateBookCommand>();
-        CreateMap<GetBookRequest, GetBookQuery>(); //TODO: should prolly delete this bad boy here, dont think we are using it
         CreateMap<UpdateBookRequest, UpdateBookCommand>();
     }
 }

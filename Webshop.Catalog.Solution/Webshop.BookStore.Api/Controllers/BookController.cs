@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using FluentValidation;
+﻿using System.Runtime.InteropServices.JavaScript;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Webshop.BookStore.Application.Features.Book.Commands.CreateBook;
@@ -10,7 +10,6 @@ using Webshop.BookStore.Application.Features.Book.Queries.GetBooks;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBooksByCategory;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBooksBySeller;
 using Webshop.BookStore.Application.Features.Book.Requests;
-using Webshop.BookStore.Application.Features.Requests;
 using Webshop.Customer.Api.Controllers;
 
 namespace Webshop.BookStore.Api.Controllers;
@@ -94,7 +93,7 @@ public class BookController : BaseController
         return result.Value.Any() ? Ok(result.Value) : NoContent();
     }
     [HttpPut]
-    [Route("{id}")]
+    [Route("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateBook([FromBody]UpdateBookRequest request)
@@ -124,6 +123,4 @@ public class BookController : BaseController
         var result = await _mediator.Send(command);
         return result.Success ? Ok() : BadRequest(result.Error);
     }
-
-
 }

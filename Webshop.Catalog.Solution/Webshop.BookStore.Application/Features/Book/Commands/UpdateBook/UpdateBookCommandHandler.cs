@@ -21,7 +21,26 @@ public class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand, Resul
 
     public async Task<Result> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
     {
-        _logger.LogWarning("UpdateBookCommandHandler Handle method called");
-        throw new NotImplementedException();
+        try
+        {
+            var bookToUpdate = await _bookRepository.GetById(request.Id);
+
+            if (bookToUpdate == null)
+            {
+                _logger.LogError($"Book with id {request.Id} not found.");
+                return Result.Fail(Errors.General.NotFound(request.Id));
+            }
+
+            _mapper.Map(request, bookToUpdate);
+
+            await _bookRepository.UpdateAsync(bookToUpdate);
+
+            return Result.Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogCritical(ex, ex.Message);
+            return Result.Fail(Errors.General.UnspecifiedError(ex.Message));
+        }
     }
 }
