@@ -2,9 +2,8 @@
 using FluentAssertions;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.Book.Commands.DeleteBook;
-using Webshop.BookStore.Domain.AggregateRoots;
 
-namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.Books;
+namespace Webshop.Bookstore.Application.Test.Unit.Book.Commands;
 
 public class DeleteBookCommandHandlerTests
 {
@@ -22,7 +21,7 @@ public class DeleteBookCommandHandlerTests
     {
         //Arrange
         var command = new DeleteBookCommand { BookId = 1 };
-        var book = new Book { Id = 1, Title = "Test Book" };
+        var book = new BookStore.Domain.AggregateRoots.Book { Id = 1, Title = "Test Book" };
 
         A.CallTo(() => _bookRepository.GetById(1)).Returns(book);
 
@@ -40,7 +39,7 @@ public class DeleteBookCommandHandlerTests
         //Arrange
         var command = new DeleteBookCommand { BookId = 99 };
 
-        A.CallTo(() => _bookRepository.GetById(99)).Returns(Task.FromResult<Book>(null));
+        A.CallTo(() => _bookRepository.GetById(99)).Returns(Task.FromResult<BookStore.Domain.AggregateRoots.Book>(null));
 
         //Act
         var result = await _commandHandler.Handle(command, CancellationToken.None);

@@ -4,9 +4,8 @@ using FluentAssertions;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.Book.Dtos;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBooks;
-using Webshop.BookStore.Domain.AggregateRoots;
 
-namespace Webshop.Bookstore.Application.Test.Unit.QueryHandlerTests.Books;
+namespace Webshop.Bookstore.Application.Test.Unit.Book.Queries;
 
 public class GetBooksQueryHandlerTests
 {
@@ -25,10 +24,10 @@ public class GetBooksQueryHandlerTests
     public async Task GivenValidQuery_ShouldReturn_ListOfBookDtos()
     {
         // Arrange
-        var books = new List<Book>
+        var books = new List<BookStore.Domain.AggregateRoots.Book>
         {
-            new Book { Id = 1, Title = "Book 1" },
-            new Book { Id = 2, Title = "Book 2" }
+            new() { Id = 1, Title = "Book 1" },
+            new() { Id = 2, Title = "Book 2" }
         };
         var bookDtos = new List<BookDto>
         {
@@ -65,13 +64,13 @@ public class GetBooksQueryHandlerTests
         result.Success.Should().BeFalse();
         result.Error.Message.Should().Be(exceptionMessage);
         A.CallTo(() => _fakeRepository.GetAll()).MustHaveHappenedOnceExactly();
-        A.CallTo(() => _fakeMapper.Map<List<BookDto>>(A<List<Book>>.Ignored)).MustNotHaveHappened();
+        A.CallTo(() => _fakeMapper.Map<List<BookDto>>(A<List<BookStore.Domain.AggregateRoots.Book>>.Ignored)).MustNotHaveHappened();
     }
     [Fact]
     public async Task GivenValidQuery_WhenNoBooksExist_ShouldReturn_EmptyListOfBookDtos()
     {
         // Arrange
-        var books = new List<Book>();
+        var books = new List<BookStore.Domain.AggregateRoots.Book>();
         var bookDtos = new List<BookDto>();
 
         A.CallTo(() => _fakeRepository.GetAll()).Returns(books);

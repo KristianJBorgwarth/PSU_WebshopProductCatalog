@@ -1,12 +1,11 @@
 ﻿using FakeItEasy;
 using FluentAssertions;
-using MediatR;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.Book.Commands.CreateBook;
 using Webshop.BookStore.Application.Services.CategoryService;
 using Webshop.Domain.Common;
 
-namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.Books;
+namespace Webshop.Bookstore.Application.Test.Unit.Book.Commands;
 
 public class CreateBookCommandHandlerTests
 {

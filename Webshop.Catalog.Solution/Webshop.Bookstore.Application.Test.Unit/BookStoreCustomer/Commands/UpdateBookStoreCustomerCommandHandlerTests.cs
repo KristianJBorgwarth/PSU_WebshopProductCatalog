@@ -2,10 +2,8 @@
 using FluentAssertions;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.UpdateCustomer;
-using Webshop.Domain.Common;
-using Xunit;
 
-namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.BookStoreCustomer
+namespace Webshop.Bookstore.Application.Test.Unit.BookStoreCustomer.Commands
 {
     public class UpdateBookStoreCustomerCommandHandlerTests
     {

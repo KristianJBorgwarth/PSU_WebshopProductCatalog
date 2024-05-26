@@ -1,17 +1,12 @@
 ﻿using AutoMapper;
 using FakeItEasy;
 using FluentAssertions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Dtos;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Queries.GetBookStoreCustomers;
 using Webshop.BookStore.Domain.AggregateRoots;
 
-namespace Webshop.Bookstore.Application.Test.Unit.QueryHandlerTests.BookStoreCustomer
+namespace Webshop.Bookstore.Application.Test.Unit.BookStoreCustomer.Queries
 {
     public class GetBookStoreCustomersQueryHandlerTests
     {
@@ -23,7 +18,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.QueryHandlerTests.BookStoreCus
         {
             _fakeCustomerRepository = A.Fake<IBookStoreCustomerRepository>();
             _fakeMapper = A.Fake<IMapper>();
-            _handler = new GetBookStoreCustomersQueryHandler(_fakeCustomerRepository, _fakeMapper);
+            _handler = new(_fakeCustomerRepository, _fakeMapper);
         }
 
         [Fact]
@@ -32,14 +27,14 @@ namespace Webshop.Bookstore.Application.Test.Unit.QueryHandlerTests.BookStoreCus
             //Arrange
             List<BookstoreCustomer> customers = new List<BookstoreCustomer>()
             {
-                new BookstoreCustomer() {
+                new() {
                     Name = "Test",
                     BaseCustomeerId = 1,
                     IsBuyer = true,
                     IsSeller = true,
                     Id = 1
                     },
-                new BookstoreCustomer() {
+                new() {
                     Name = "Test",
                     BaseCustomeerId = 2,
                     IsBuyer = true,
@@ -49,7 +44,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.QueryHandlerTests.BookStoreCus
             };
             List<BookStoreCustomerDto> bookStoreCustomerDtos = new List<BookStoreCustomerDto>
             {
-                new BookStoreCustomerDto
+                new()
                 {
                     Name = "Test",
                     BaseCustomeerId = 1,
@@ -57,7 +52,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.QueryHandlerTests.BookStoreCus
                     IsSeller = true,
                     Id = 1
                 },
-                new BookStoreCustomerDto
+                new()
                 {
                     Name = "Test",
                     BaseCustomeerId = 2,

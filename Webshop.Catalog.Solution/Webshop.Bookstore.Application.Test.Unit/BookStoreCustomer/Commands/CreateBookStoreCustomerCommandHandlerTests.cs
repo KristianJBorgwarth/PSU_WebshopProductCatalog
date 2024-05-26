@@ -3,11 +3,10 @@ using FluentAssertions;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
 using Webshop.BookStore.Application.Services.CustomerService;
-using Webshop.Domain.Common;
 using Webshop.BookStore.Domain.AggregateRoots;
-using Xunit;
+using Webshop.Domain.Common;
 
-namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.BookStoreCustomer;
+namespace Webshop.Bookstore.Application.Test.Unit.BookStoreCustomer.Commands;
 
 public class CreateBookStoreCustomerCommandHandlerTests
 {
