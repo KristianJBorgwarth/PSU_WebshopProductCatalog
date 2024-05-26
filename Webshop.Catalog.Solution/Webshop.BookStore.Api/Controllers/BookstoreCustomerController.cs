@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Mvc;
-using Webshop.BookStore.Application.Features.Book.Requests;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.DeleteCustomer;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.UpdateCustomer;
