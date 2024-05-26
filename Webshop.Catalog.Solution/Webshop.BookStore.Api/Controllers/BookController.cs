@@ -7,6 +7,7 @@ using Webshop.BookStore.Application.Features.Book.Commands.DeleteBook;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBook;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBooks;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBooksByCategory;
+using Webshop.BookStore.Application.Features.Book.Queries.GetBooksBySeller;
 using Webshop.BookStore.Application.Features.Book.Requests;
 using Webshop.Customer.Api.Controllers;
 
@@ -86,6 +87,20 @@ public class BookController : BaseController
         var command = new DeleteBookCommand() {BookId = id};
         var result = await _mediator.Send(command);
         return result.Success ? Ok() : BadRequest(result.Error);
+    }
+
+    [HttpGet]
+    [Route("seller/{sellerId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> GetBookBySellerId(int sellerId)
+    {
+        var query = new GetBooksBySellerQuery() {SellerId = sellerId};
+        var result = await _mediator.Send(query);
+
+        if (!result.Success) return BadRequest(result.Error);
+        return result.Value.Any() ? Ok(result.Value) : NoContent();
     }
 
 }
