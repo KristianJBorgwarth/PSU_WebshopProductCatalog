@@ -6,7 +6,7 @@ using Webshop.BookStore.Application.Features.Book.Dtos;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBooksByCategory;
 using Webshop.BookStore.Domain.AggregateRoots;
 
-namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.Books;
+namespace Webshop.Bookstore.Application.Test.Unit.QueryHandlerTests.Books;
 
 public class GetBooksByCategoryQueryHandlerTests
 {

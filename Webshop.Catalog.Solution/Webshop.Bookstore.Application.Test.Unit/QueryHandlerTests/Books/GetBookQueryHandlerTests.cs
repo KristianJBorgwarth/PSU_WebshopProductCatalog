@@ -7,7 +7,7 @@ using Webshop.BookStore.Application.Features.Book.Queries.GetBook;
 using Webshop.BookStore.Domain.AggregateRoots;
 using Webshop.Domain.Common;
 
-namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.Books;
+namespace Webshop.Bookstore.Application.Test.Unit.QueryHandlerTests.Books;
 
 public class GetBookQueryHandlerTests
 {

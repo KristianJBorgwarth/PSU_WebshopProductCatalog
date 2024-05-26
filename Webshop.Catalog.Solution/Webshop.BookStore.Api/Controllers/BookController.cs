@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 using Webshop.BookStore.Application.Features.Book.Commands.CreateBook;
 using Webshop.BookStore.Application.Features.Book.Commands.DeleteBook;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBook;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBooks;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBooksByCategory;
+using Webshop.BookStore.Application.Features.Book.Queries.GetBooksBySeller;
 using Webshop.BookStore.Application.Features.Book.Requests;
 using Webshop.Customer.Api.Controllers;
 
@@ -16,8 +16,8 @@ namespace Webshop.BookStore.Api.Controllers;
 public class BookController : BaseController
 {
     private readonly IMediator _mediator;
-    private readonly ILogger<BookController> _logger;
     private readonly IMapper _mapper;
+    private readonly ILogger<BookController> _logger;
 
     public BookController(IMediator mediator, ILogger<BookController> logger, IMapper mapper)
     {
@@ -77,6 +77,20 @@ public class BookController : BaseController
         return result.Value != null ? Ok(result.Value) : NoContent();
     }
 
+    [HttpGet]
+    [Route("seller/{sellerId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<ActionResult> GetBookBySellerId(int sellerId)
+    {
+        var query = new GetBooksBySellerQuery() {SellerId = sellerId};
+        var result = await _mediator.Send(query);
+
+        if (!result.Success) return BadRequest(result.Error);
+        return result.Value.Any() ? Ok(result.Value) : NoContent();
+    }
+
     [HttpDelete]
     [Route("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -87,5 +101,4 @@ public class BookController : BaseController
         var result = await _mediator.Send(command);
         return result.Success ? Ok() : BadRequest(result.Error);
     }
-
 }
