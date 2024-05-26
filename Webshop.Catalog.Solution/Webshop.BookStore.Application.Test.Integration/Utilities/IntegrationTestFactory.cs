@@ -16,6 +16,9 @@ public class IntegrationTestFactory<TProgram, TDbContext> : WebApplicationFactor
 
     public IntegrationTestFactory()
     {
+        var projectRoot = GetProjectRootDirectory();
+        var composeFilePath = Path.Combine(projectRoot, "Webshop.Catalog.Solution", "docker-compose.test.yml");
+
         _dbContainer = new MsSqlBuilder()
             .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
             .WithCleanUp(true)
@@ -23,7 +26,8 @@ public class IntegrationTestFactory<TProgram, TDbContext> : WebApplicationFactor
 
         _compositeService = new Builder().UseContainer()
             .UseCompose()
-            .FromFile("C:\\Users\\fich2\\Desktop\\PSU_WebshopProductCatalog\\Webshop.Catalog.Solution\\docker-compose.test.yml")
+            .FromFile(composeFilePath)
+            .ServiceName("test")
             .RemoveOrphans()
             .Build();
     }
@@ -59,5 +63,15 @@ public class IntegrationTestFactory<TProgram, TDbContext> : WebApplicationFactor
     {
         await _dbContainer.StopAsync();
         _compositeService.Dispose();
+    }
+
+    private static string GetProjectRootDirectory()
+    {
+        var directory = Directory.GetCurrentDirectory();
+        while (directory != null && !Directory.Exists(Path.Combine(directory, ".git")))
+        {
+            directory = Directory.GetParent(directory)?.FullName;
+        }
+        return directory ?? throw new Exception("Could not locate project root directory.");
     }
 }

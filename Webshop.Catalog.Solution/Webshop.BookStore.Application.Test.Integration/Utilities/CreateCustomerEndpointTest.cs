@@ -8,4 +8,11 @@ public class CreateCustomerEndpointTest : IntegrationTestBase
     {
 
     }
+
+    [Fact]
+    public async Task CreateCustomerEndpoint_ShouldReturnCreated()
+    {
+
+    }
+
 }
