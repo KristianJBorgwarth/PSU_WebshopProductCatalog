@@ -7,7 +7,6 @@ using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.UpdateCu
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Queries.GetBookStoreCustomers;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Requests;
 using Webshop.Customer.Api.Controllers;
-using Webshop.Domain.Common;
 using static System.String;
 
 namespace Webshop.BookStore.Api.Controllers;
@@ -53,10 +52,20 @@ public class BookstoreCustomerController : BaseController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateCustomer([FromBody] UpdateCustomerRequest request)
     {
-        UpdateCustomerCommand command = _mapper.Map<UpdateCustomerCommand>(request);
-        Result result = await _mediator.Send(command);
+        UpdateCustomerRequest.Validator validator = new();
+        var result = await validator.ValidateAsync(request);
+        if (result.IsValid)
+        {
+            UpdateCustomerCommand command = _mapper.Map<UpdateCustomerCommand>(request);
+            var updateResult = await _mediator.Send(command);
 
-        return result.Success ? Ok(result) : Error(result.Error);
+            return updateResult.Success ? Ok(updateResult) : Error(updateResult.Error);
+        }
+        else
+        {
+            _logger.LogError(Join(",", result.Errors.Select(x => x.ErrorMessage)));
+            return Error(result.Errors);
+        }
     }
 
     [HttpDelete]
