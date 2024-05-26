@@ -1,4 +1,4 @@
-﻿namespace Webshop.BookStore.Application.Features.Requests;
+﻿namespace Webshop.BookStore.Application.Features.BookStoreCustomer.Requests;
 
 public class CreateCustomerRequest
 {

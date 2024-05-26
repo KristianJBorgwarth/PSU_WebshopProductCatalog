@@ -1,10 +1,12 @@
 using System.Reflection;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Serilog;
+using Webshop.BookStore.Application.Behavior;
 using Webshop.BookStore.Application.Contracts.Persistence;
-using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
-using Webshop.BookStore.Application.Profiles;
 using Webshop.BookStore.Application.Services;
 using Webshop.BookStore.Application.Services.CategoryService;
 using Webshop.Bookstore.Persistence.Context;
@@ -31,21 +33,33 @@ if (env.IsDevelopment())
 
 #endregion
 
+#region Logging setup
+var sequrl = configuration.GetValue<string>("Settings:SeqLogAddress")!;
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .Enrich.FromLogContext()
+    .Enrich.WithProperty("Service", "BookStore.API") //enrich with the tag "service" and the name of this service
+    .WriteTo.Seq(sequrl)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
+#endregion
+
 #region MediatR setup
 
 builder.Services.AddMediatR(cfg =>
 {
-    cfg.RegisterServicesFromAssemblyContaining(typeof(CreateCustomerCommand));
-
+    cfg.RegisterServicesFromAssembly(Assembly.Load("Webshop.BookStore.Application"));
 });
+
 #endregion
 
 #region AutoMapper setup
 
 builder.Services.AddAutoMapper(cfg =>
 {
-    cfg.AddMaps(typeof(RequestMappingProfile).Assembly);
-    cfg.AddMaps(typeof(DtoMappingProfile).Assembly);
+    cfg.AddMaps(Assembly.Load("Webshop.BookStore.Application"));
 });
 #endregion
 

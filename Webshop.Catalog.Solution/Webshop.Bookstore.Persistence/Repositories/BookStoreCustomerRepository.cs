@@ -2,7 +2,6 @@
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Domain.AggregateRoots;
 using Webshop.Bookstore.Persistence.Context;
-using Webshop.Domain.Common;
 
 namespace Webshop.Bookstore.Persistence.Repositories;
 

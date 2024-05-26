@@ -5,7 +5,7 @@ using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCu
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.DeleteCustomer;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.UpdateCustomer;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Queries.GetBookStoreCustomers;
-using Webshop.BookStore.Application.Features.Requests;
+using Webshop.BookStore.Application.Features.BookStoreCustomer.Requests;
 using Webshop.Customer.Api.Controllers;
 using Webshop.Domain.Common;
 

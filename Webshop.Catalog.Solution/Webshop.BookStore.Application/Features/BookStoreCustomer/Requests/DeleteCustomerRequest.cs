@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Webshop.BookStore.Application.Features.Requests
+﻿
+namespace Webshop.BookStore.Application.Features.BookStoreCustomer.Requests
 {
     public class DeleteCustomerRequest
     {
