@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.Book.Commands.CreateBook;
+using Webshop.BookStore.Application.Features.Book.Commands.UpdateBook;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBook;
 using Webshop.BookStore.Application.Features.Book.Requests;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
@@ -21,6 +22,7 @@ public class RequestMappingProfile : Profile
 
         // Book
         CreateMap<CreateBookRequest, CreateBookCommand>();
-        CreateMap<GetBookRequest, GetBookQuery>();
+        CreateMap<GetBookRequest, GetBookQuery>(); //TODO: should prolly delete this bad boy here, dont think we are using it
+        CreateMap<UpdateBookRequest, UpdateBookCommand>();
     }
 }
