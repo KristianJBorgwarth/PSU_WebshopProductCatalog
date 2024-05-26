@@ -78,7 +78,7 @@ public class BookController : BaseController
     }
 
     [HttpDelete]
-    [Route("")]
+    [Route("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> DeleteBook(int id)

@@ -36,7 +36,7 @@ public class BookRepository : IBookRepository
 
     public async Task DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+       await _context.Books.Where(c => c.Id == id).ExecuteDeleteAsync();
     }
 
     public async Task<Book> GetById(int id)

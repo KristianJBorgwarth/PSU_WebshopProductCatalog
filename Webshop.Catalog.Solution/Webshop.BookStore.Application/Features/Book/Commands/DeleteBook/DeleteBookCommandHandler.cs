@@ -12,9 +12,24 @@ public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, Resul
         _bookRepository = bookRepository;
     }
 
-
     public async Task<Result> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var bookToDelete = await _bookRepository.GetById(request.BookId);
+
+            if (bookToDelete == null)
+            {
+                return Result.Fail(Errors.General.NotFound(request.BookId));
+            }
+
+            await _bookRepository.DeleteAsync(bookToDelete.Id);
+
+            return Result.Ok();
+        }
+        catch (Exception e)
+        {
+            return Result.Fail(Errors.General.UnspecifiedError(e.Message));
+        }
     }
 }
