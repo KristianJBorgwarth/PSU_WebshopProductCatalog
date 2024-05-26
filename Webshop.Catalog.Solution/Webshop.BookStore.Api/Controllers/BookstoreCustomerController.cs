@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Mvc;
 using Webshop.BookStore.Application.Features.Book.Requests;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
@@ -61,13 +62,12 @@ public class BookstoreCustomerController : BaseController
     }
 
     [HttpDelete]
-    [Route("")]
+    [Route("{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> DeleteCustomer([FromBody] DeleteCustomerRequest request)
+    public async Task<IActionResult> DeleteCustomer(int id)
     {
-        DeleteCustomerCommand command = _mapper.Map<DeleteCustomerCommand>(request);
-        Result result = await _mediator.Send(command);
+        var result = await _mediator.Send(new DeleteCustomerCommand { CustomerId = id });
 
         return result.Success ? Ok(result) : Error(result.Error);
     }
