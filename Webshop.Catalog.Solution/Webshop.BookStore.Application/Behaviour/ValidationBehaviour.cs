@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Webshop.Domain.Common;
 
 namespace Webshop.BookStore.Application.Behaviour;
@@ -10,9 +11,12 @@ public class ValidationBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse> where TResponse : Result, new()
 {
     private readonly IValidator<TRequest>? _validator;
+    private readonly ILogger _logger;
 
-    public ValidationBehavior(IValidator<TRequest>? validator = null)
+    public ValidationBehavior(ILogger<ValidationBehavior<TRequest, TResponse>> logger, IValidator<TRequest>? validator = null)
     {
+        _logger = logger;
+        _logger.LogWarning("validationLogger called");
         _validator = validator;
     }
 

@@ -4,8 +4,10 @@ using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Serilog;
 using Webshop.BookStore.Application.Behaviour;
 using Webshop.BookStore.Application.Contracts.Persistence;
+using Webshop.BookStore.Application.Features.Book.Commands.UpdateBook;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
 using Webshop.BookStore.Application.Profiles;
 using Webshop.BookStore.Application.Services;
@@ -34,12 +36,24 @@ if (env.IsDevelopment())
 
 #endregion
 
+#region Logging setup
+var sequrl = configuration.GetValue<string>("Settings:SeqLogAddress")!;
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .Enrich.FromLogContext()
+    .Enrich.WithProperty("Service", "BookStore.API") //enrich with the tag "service" and the name of this service
+    .WriteTo.Seq(sequrl)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
+#endregion
+
 #region MediatR setup
 
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssemblyContaining(typeof(CreateCustomerCommand));
-
 });
 
 builder.Services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
@@ -86,6 +100,8 @@ builder.Services.AddDbContext<BookstoreDbContext>(options =>
 #region FluentValidation setup
 builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("Webshop.BookStore.Application"));
+// Explicitly register the UpdateBookCommandValidator
+builder.Services.AddTransient<IValidator<UpdateBookCommand>, UpdateBookCommandValidator>();
 #endregion
 
 #region Repository setup
