@@ -61,7 +61,7 @@ services:
       - ConnectionStrings__DefaultConnection=Server=webshopdatabase_test;Database=psuwebshop;User=sa;Password=PSU@password;
   sqlexpress:
     container_name: webshopdatabase_test
-    image: mcr.microsoft.com/mssql/server:latest
+    image: kristianjf97/sd-test-mssql-server
     restart: unless-stopped
     ports:
       - 11433:1433
@@ -69,8 +69,6 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=PSU@password
       - MSSQL_PID=Express
-    volumes:
-      - ./test_data:/var/opt/mssql/data
     networks:
       - testbacktier
 networks:
