@@ -4,9 +4,8 @@ using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.Book.Commands.UpdateBook;
-using Webshop.BookStore.Domain.AggregateRoots;
 
-namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.Books
+namespace Webshop.Bookstore.Application.Test.Unit.Book.Commands
 {
     public class UpdateBookCommandHandlerTests
     {
@@ -28,7 +27,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.Books
             // Arrange
             var command = new UpdateBookCommand { Id = 1 };
             A.CallTo(() => _bookRepository.GetById(A<int>.That.IsEqualTo(command.Id)))
-                .Returns(Task.FromResult<Book>(null));
+                .Returns(Task.FromResult<BookStore.Domain.AggregateRoots.Book>(null));
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
@@ -36,7 +35,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.Books
             // Assert
             result.Success.Should().BeFalse();
             result.Error.Message.Should().BeEquivalentTo("Could not find entity with ID 1.");
-            A.CallTo(() => _mapper.Map(command, A<Book>.Ignored)).MustNotHaveHappened();
+            A.CallTo(() => _mapper.Map(command, A<BookStore.Domain.AggregateRoots.Book>.Ignored)).MustNotHaveHappened();
         }
 
         [Fact]
@@ -44,7 +43,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.Books
         {
             // Arrange
             var command = new UpdateBookCommand { Id = 1 };
-            var book = new Book { Id = 1 };
+            var book = new BookStore.Domain.AggregateRoots.Book { Id = 1 };
             A.CallTo(() => _bookRepository.GetById(A<int>.That.IsEqualTo(command.Id)))
                 .Returns(Task.FromResult(book));
             A.CallTo(() => _mapper.Map(command, book)).Invokes(() => {});
@@ -53,7 +52,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.Books
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            A.CallTo(() => _bookRepository.UpdateAsync(A<Book>.That.IsSameAs(book))).MustHaveHappenedOnceExactly();
+            A.CallTo(() => _bookRepository.UpdateAsync(A<BookStore.Domain.AggregateRoots.Book>.That.IsSameAs(book))).MustHaveHappenedOnceExactly();
             A.CallTo(() => _mapper.Map(command, book)).MustHaveHappenedOnceExactly();
             result.Success.Should().BeTrue();
         }
@@ -71,7 +70,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.Books
 
             // Assert
             result.Success.Should().BeFalse();
-            A.CallTo(() => _mapper.Map(command, A<Book>.Ignored)).MustNotHaveHappened();
+            A.CallTo(() => _mapper.Map(command, A<BookStore.Domain.AggregateRoots.Book>.Ignored)).MustNotHaveHappened();
         }
     }
 }

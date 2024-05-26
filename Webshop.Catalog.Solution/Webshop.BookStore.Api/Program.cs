@@ -1,11 +1,7 @@
 using System.Reflection;
-using FluentValidation;
-using FluentValidation.AspNetCore;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Serilog;
-using Webshop.BookStore.Application.Behavior;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Services;
 using Webshop.BookStore.Application.Services.CategoryService;

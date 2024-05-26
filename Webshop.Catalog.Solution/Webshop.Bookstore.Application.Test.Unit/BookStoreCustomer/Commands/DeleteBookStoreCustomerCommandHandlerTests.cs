@@ -1,24 +1,19 @@
 ﻿using FakeItEasy;
 using FluentAssertions;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.DeleteCustomer;
-using Webshop.Domain.Common;
-using Xunit;
 
-namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.BookStoreCustomer
+namespace Webshop.Bookstore.Application.Test.Unit.BookStoreCustomer.Commands
 {
-    public class DeleteCustomerCommandHandlerTests
+    public class DeleteBookStoreCustomerCommandHandlerTests
     {
-        private readonly DeleteCustomerCommandHandler _handler;
+        private readonly DeleteBookStoreCustomerCommandHandler _handler;
         private readonly IBookStoreCustomerRepository _fakeBookStoreCustomerRepository;
 
-        public DeleteCustomerCommandHandlerTests()
+        public DeleteBookStoreCustomerCommandHandlerTests()
         {
             _fakeBookStoreCustomerRepository = A.Fake<IBookStoreCustomerRepository>();
-            _handler = new DeleteCustomerCommandHandler(_fakeBookStoreCustomerRepository);
+            _handler = new DeleteBookStoreCustomerCommandHandler(_fakeBookStoreCustomerRepository);
         }
 
         [Fact]
@@ -26,7 +21,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.BookStoreC
         {
             // Arrange
             var validId = 1;
-            var cmd = new DeleteCustomerCommand { CustomerId = validId };
+            var cmd = new DeleteBookStoreCustomerCommand { CustomerId = validId };
             var existingCustomer = new Webshop.BookStore.Domain.AggregateRoots.BookstoreCustomer { Id = validId };
 
             A.CallTo(() => _fakeBookStoreCustomerRepository.GetById(validId))
@@ -50,7 +45,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.BookStoreC
         {
             // Arrange
             var invalidId = 1;
-            var cmd = new DeleteCustomerCommand { CustomerId = invalidId };
+            var cmd = new DeleteBookStoreCustomerCommand { CustomerId = invalidId };
 
             A.CallTo(() => _fakeBookStoreCustomerRepository.GetById(invalidId))
                 .Returns(Task.FromResult<Webshop.BookStore.Domain.AggregateRoots.BookstoreCustomer>(null));
@@ -72,7 +67,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.BookStoreC
         {
             // Arrange
             var validId = 1;
-            var cmd = new DeleteCustomerCommand { CustomerId = validId };
+            var cmd = new DeleteBookStoreCustomerCommand { CustomerId = validId };
             var existingCustomer = new Webshop.BookStore.Domain.AggregateRoots.BookstoreCustomer { Id = validId };
 
             A.CallTo(() => _fakeBookStoreCustomerRepository.GetById(validId))

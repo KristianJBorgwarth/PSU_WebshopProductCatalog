@@ -1,20 +1,19 @@
 ﻿using MediatR;
-using System.Reflection.Metadata.Ecma335;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.Domain.Common;
 
 namespace Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.DeleteCustomer
 {
-    public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand, Result>
+    public class DeleteBookStoreCustomerCommandHandler : IRequestHandler<DeleteBookStoreCustomerCommand, Result>
     {
         private readonly IBookStoreCustomerRepository _bookStoreCustomerRepository;
 
-        public DeleteCustomerCommandHandler(IBookStoreCustomerRepository bookStoreCustomerRepository)
+        public DeleteBookStoreCustomerCommandHandler(IBookStoreCustomerRepository bookStoreCustomerRepository)
         {
             _bookStoreCustomerRepository = bookStoreCustomerRepository;
         }
 
-        public async Task<Result> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(DeleteBookStoreCustomerCommand request, CancellationToken cancellationToken)
         {
             try
             {

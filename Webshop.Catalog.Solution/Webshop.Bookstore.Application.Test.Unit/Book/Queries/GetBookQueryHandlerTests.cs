@@ -4,10 +4,9 @@ using FluentAssertions;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.Book.Dtos;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBook;
-using Webshop.BookStore.Domain.AggregateRoots;
 using Webshop.Domain.Common;
 
-namespace Webshop.Bookstore.Application.Test.Unit.QueryHandlerTests.Books;
+namespace Webshop.Bookstore.Application.Test.Unit.Book.Queries;
 
 public class GetBookQueryHandlerTests
 {
@@ -26,7 +25,7 @@ public class GetBookQueryHandlerTests
     public async void GetBookQueryHandler_ReturnsBookDto_WhenBookExists()
     {
         var bookId = 2;
-        var book = new Book
+        var book = new BookStore.Domain.AggregateRoots.Book
         {
             Id = bookId,
             Title = "Test Book",
@@ -58,7 +57,7 @@ public class GetBookQueryHandlerTests
     public async Task GetBookQueryHandler_ReturnsNotFound_WhenBookDoesNotExist()
     {
         var bookId = 2;
-        A.CallTo(() => _fakeBookRepository.GetById(bookId)).Returns((Book)null);
+        A.CallTo(() => _fakeBookRepository.GetById(bookId)).Returns((BookStore.Domain.AggregateRoots.Book)null);
 
         var result = await _queryHandler.Handle(new GetBookQuery { BookId = bookId }, CancellationToken.None);
 
@@ -66,7 +65,7 @@ public class GetBookQueryHandlerTests
         result.Success.Should().BeFalse();
         result.Error.Code.Should().Be(Errors.General.NotFound(bookId).Code);
         A.CallTo(() => _fakeBookRepository.GetById(bookId)).MustHaveHappenedOnceExactly();
-        A.CallTo(() => _fakeMapper.Map<BookDto>(A<Book>.Ignored)).MustNotHaveHappened();
+        A.CallTo(() => _fakeMapper.Map<BookDto>(A<BookStore.Domain.AggregateRoots.Book>.Ignored)).MustNotHaveHappened();
     }
 
     [Fact]
@@ -82,6 +81,6 @@ public class GetBookQueryHandlerTests
         result.Success.Should().BeFalse();
         result.Error.Code.Should().Be(Errors.General.UnspecifiedError(exceptionMessage).Code);
         A.CallTo(() => _fakeBookRepository.GetById(bookId)).MustHaveHappenedOnceExactly();
-        A.CallTo(() => _fakeMapper.Map<BookDto>(A<Book>.Ignored)).MustNotHaveHappened();
+        A.CallTo(() => _fakeMapper.Map<BookDto>(A<BookStore.Domain.AggregateRoots.Book>.Ignored)).MustNotHaveHappened();
     }
 }

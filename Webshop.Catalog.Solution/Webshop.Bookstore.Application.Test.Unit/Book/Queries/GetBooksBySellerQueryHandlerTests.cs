@@ -4,9 +4,8 @@ using FluentAssertions;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Features.Book.Dtos;
 using Webshop.BookStore.Application.Features.Book.Queries.GetBooksBySeller;
-using Webshop.BookStore.Domain.AggregateRoots;
 
-namespace Webshop.Bookstore.Application.Test.Unit.QueryHandlerTests.Books;
+namespace Webshop.Bookstore.Application.Test.Unit.Book.Queries;
 
 public class GetBooksBySellerQueryHandlerTests
 {
@@ -26,10 +25,10 @@ public class GetBooksBySellerQueryHandlerTests
         {
             // Arrange
             var query = new GetBooksBySellerQuery { SellerId = 1 };
-            var books = new Book[]
+            var books = new BookStore.Domain.AggregateRoots.Book[]
             {
-                new Book { Id = 1, Title = "Book 1", Author = "Author 1", Description = "Description 1", Price = 10, CategoryId = 1, SellerId = 1 },
-                new Book { Id = 2, Title = "Book 2", Author = "Author 2", Description = "Description 2", Price = 20, CategoryId = 1, SellerId = 1 }
+                new() { Id = 1, Title = "Book 1", Author = "Author 1", Description = "Description 1", Price = 10, CategoryId = 1, SellerId = 1 },
+                new() { Id = 2, Title = "Book 2", Author = "Author 2", Description = "Description 2", Price = 20, CategoryId = 1, SellerId = 1 }
             };
             var bookDtos = new List<BookDto>
             {
@@ -55,7 +54,7 @@ public class GetBooksBySellerQueryHandlerTests
         {
             // Arrange
             var query = new GetBooksBySellerQuery { SellerId = 1 };
-            var books = Array.Empty<Book>();
+            var books = Array.Empty<BookStore.Domain.AggregateRoots.Book>();
             var bookDtos = new List<BookDto>();
 
             A.CallTo(() => _fakeBookRepository.GetBooksBySeller(query.SellerId)).Returns(books);
@@ -87,6 +86,6 @@ public class GetBooksBySellerQueryHandlerTests
             result.Success.Should().BeFalse();
             result.Error.Message.Should().Contain(exceptionMessage);
             A.CallTo(() => _fakeBookRepository.GetBooksBySeller(query.SellerId)).MustHaveHappenedOnceExactly();
-            A.CallTo(() => _fakeMapper.Map<List<BookDto>>(A<IEnumerable<Book>>._)).MustNotHaveHappened();
+            A.CallTo(() => _fakeMapper.Map<List<BookDto>>(A<IEnumerable<BookStore.Domain.AggregateRoots.Book>>._)).MustNotHaveHappened();
         }
 }
