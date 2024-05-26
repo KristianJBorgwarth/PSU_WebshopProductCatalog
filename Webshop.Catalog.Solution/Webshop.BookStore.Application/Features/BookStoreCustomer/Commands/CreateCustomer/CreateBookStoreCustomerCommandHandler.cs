@@ -5,18 +5,18 @@ using Webshop.Domain.Common;
 
 namespace Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
 
-public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, Result>
+public class CreateBookStoreCustomerCommandHandler : IRequestHandler<CreateBookStoreCustomerCommand, Result>
 {
     private readonly ICustomerService _customerService;
     private readonly IBookStoreCustomerRepository _bookStoreCustomerRepository;
 
-    public CreateCustomerCommandHandler(ICustomerService customerService, IBookStoreCustomerRepository bookStoreCustomerRepository)
+    public CreateBookStoreCustomerCommandHandler(ICustomerService customerService, IBookStoreCustomerRepository bookStoreCustomerRepository)
     {
         _customerService = customerService;
         _bookStoreCustomerRepository = bookStoreCustomerRepository;
     }
 
-    public async Task<Result> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(CreateBookStoreCustomerCommand request, CancellationToken cancellationToken)
     {
       Result<CustomerResult> result = await _customerService.GetCustomerAsync(request.CustomerId);
 

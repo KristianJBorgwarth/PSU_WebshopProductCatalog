@@ -1,24 +1,19 @@
 ﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.Domain.Common;
 
 namespace Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.UpdateCustomer
 {
-    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, Result>
+    public class UpdateBookStoreCustomerCommandHandler : IRequestHandler<UpdateBookStoreCustomerCommand, Result>
     {
         private readonly IBookStoreCustomerRepository _bookStoreCustomerRepository;
 
-        public UpdateCustomerCommandHandler(IBookStoreCustomerRepository bookStoreCustomerRepository)
+        public UpdateBookStoreCustomerCommandHandler(IBookStoreCustomerRepository bookStoreCustomerRepository)
         {
             _bookStoreCustomerRepository = bookStoreCustomerRepository;
         }
 
-        public async Task<Result> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateBookStoreCustomerCommand request, CancellationToken cancellationToken)
         {
             try
             {

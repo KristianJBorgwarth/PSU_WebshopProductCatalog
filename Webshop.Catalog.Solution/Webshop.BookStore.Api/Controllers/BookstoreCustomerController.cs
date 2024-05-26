@@ -29,13 +29,13 @@ public class BookstoreCustomerController : BaseController
     [Route("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerRequest request)
+    public async Task<IActionResult> CreateCustomer([FromBody] CreateBookStoreCustomerRequest request)
     {
-        CreateCustomerRequest.Validator validator = new();
+        CreateBookStoreCustomerRequest.Validator validator = new();
         var result = await validator.ValidateAsync(request);
         if (result.IsValid)
         {
-            var command = _mapper.Map<CreateCustomerCommand>(request);
+            var command = _mapper.Map<CreateBookStoreCustomerCommand>(request);
             var createResult = await _mediator.Send(command);
             return createResult.Success ? Ok(createResult) : Error(createResult.Error);
         }
@@ -50,13 +50,13 @@ public class BookstoreCustomerController : BaseController
     [Route("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateCustomer([FromBody] UpdateCustomerRequest request)
+    public async Task<IActionResult> UpdateCustomer([FromBody] UpdateBookStoreCustomerRequest request)
     {
-        UpdateCustomerRequest.Validator validator = new();
+        UpdateBookStoreCustomerRequest.Validator validator = new();
         var result = await validator.ValidateAsync(request);
         if (result.IsValid)
         {
-            UpdateCustomerCommand command = _mapper.Map<UpdateCustomerCommand>(request);
+            UpdateBookStoreCustomerCommand command = _mapper.Map<UpdateBookStoreCustomerCommand>(request);
             var updateResult = await _mediator.Send(command);
 
             return updateResult.Success ? Ok(updateResult) : Error(updateResult.Error);
@@ -74,7 +74,7 @@ public class BookstoreCustomerController : BaseController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> DeleteCustomer(int id)
     {
-        var result = await _mediator.Send(new DeleteCustomerCommand { CustomerId = id });
+        var result = await _mediator.Send(new DeleteBookStoreCustomerCommand { CustomerId = id });
 
         return result.Success ? Ok(result) : Error(result.Error);
     }

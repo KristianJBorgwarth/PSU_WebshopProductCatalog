@@ -13,8 +13,8 @@ public class RequestMappingProfile : Profile
     public RequestMappingProfile()
     {
         // Customer
-        CreateMap<CreateCustomerRequest, CreateCustomerCommand>();
-        CreateMap<UpdateCustomerRequest, UpdateCustomerCommand>();
+        CreateMap<CreateBookStoreCustomerRequest, CreateBookStoreCustomerCommand>();
+        CreateMap<UpdateBookStoreCustomerRequest, UpdateBookStoreCustomerCommand>();
 
         // Book
         CreateMap<CreateBookRequest, CreateBookCommand>();

@@ -3,13 +3,13 @@ using Webshop.Domain.Common;
 
 namespace Webshop.BookStore.Application.Features.BookStoreCustomer.Requests
 {
-    public class UpdateCustomerRequest
+    public class UpdateBookStoreCustomerRequest
     {
         public int Id { get; set; }
         public bool IsSeller { get; set; }
         public bool IsBuyer { get; set; }
 
-        public class Validator : AbstractValidator<UpdateCustomerRequest>
+        public class Validator : AbstractValidator<UpdateBookStoreCustomerRequest>
         {
             public Validator()
             {

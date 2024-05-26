@@ -9,24 +9,24 @@ using Xunit;
 
 namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.BookStoreCustomer;
 
-public class CreateCustomerCommandHandlerTests
+public class CreateBookStoreCustomerCommandHandlerTests
 {
-    private readonly CreateCustomerCommandHandler _cmdHandler;
+    private readonly CreateBookStoreCustomerCommandHandler _cmdHandler;
     private readonly ICustomerService _fakeCustomerService;
     private readonly IBookStoreCustomerRepository _fakeBookStoreCustomerRepository;
 
-    public CreateCustomerCommandHandlerTests()
+    public CreateBookStoreCustomerCommandHandlerTests()
     {
         _fakeCustomerService = A.Fake<ICustomerService>();
         _fakeBookStoreCustomerRepository = A.Fake<IBookStoreCustomerRepository>();
-        _cmdHandler = new CreateCustomerCommandHandler(_fakeCustomerService, _fakeBookStoreCustomerRepository);
+        _cmdHandler = new CreateBookStoreCustomerCommandHandler(_fakeCustomerService, _fakeBookStoreCustomerRepository);
     }
 
     [Fact]
     public async Task GivenValidCommand_ShouldReturn_ResultOk()
     {
         // Arrange
-        var cmd = new CreateCustomerCommand
+        var cmd = new CreateBookStoreCustomerCommand
         {
             CustomerId = 4,
             IsBuyer = true,
@@ -65,7 +65,7 @@ public class CreateCustomerCommandHandlerTests
     public async Task GivenInvalidCommand_ShouldReturn_ResultFail()
     {
         // Arrange
-        var cmd = new CreateCustomerCommand
+        var cmd = new CreateBookStoreCustomerCommand
         {
             CustomerId = 42069,
             IsBuyer = true,

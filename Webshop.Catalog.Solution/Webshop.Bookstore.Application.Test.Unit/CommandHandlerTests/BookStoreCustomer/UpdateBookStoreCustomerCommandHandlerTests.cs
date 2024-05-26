@@ -7,22 +7,22 @@ using Xunit;
 
 namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.BookStoreCustomer
 {
-    public class UpdateCustomerCommandHandlerTests
+    public class UpdateBookStoreCustomerCommandHandlerTests
     {
-        private readonly UpdateCustomerCommandHandler _cmdHandler;
+        private readonly UpdateBookStoreCustomerCommandHandler _cmdHandler;
         private readonly IBookStoreCustomerRepository _fakeBookStoreCustomerRepository;
 
-        public UpdateCustomerCommandHandlerTests()
+        public UpdateBookStoreCustomerCommandHandlerTests()
         {
             _fakeBookStoreCustomerRepository = A.Fake<IBookStoreCustomerRepository>();
-            _cmdHandler = new UpdateCustomerCommandHandler(_fakeBookStoreCustomerRepository);
+            _cmdHandler = new UpdateBookStoreCustomerCommandHandler(_fakeBookStoreCustomerRepository);
         }
 
         [Fact]
         public async Task Given_ValidCommand_ShouldReturn_ResultOk()
         {
             // Arrange
-            var updateCustomerCommand = new UpdateCustomerCommand
+            var updateCustomerCommand = new UpdateBookStoreCustomerCommand
             {
                 Id = 1,
                 IsSeller = true,
@@ -55,7 +55,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.BookStoreC
         public async Task Given_InvalidCommand_ShouldReturn_ResultFail()
         {
             // Arrange
-            var updateCustomerCommand = new UpdateCustomerCommand
+            var updateCustomerCommand = new UpdateBookStoreCustomerCommand
             {
                 Id = 1,
                 IsSeller = true,
@@ -80,7 +80,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.CommandHandlerTests.BookStoreC
         public async Task Handle_RepositoryThrowsException_ShouldReturn_ResultFail()
         {
             // Arrange
-            var updateCustomerCommand = new UpdateCustomerCommand
+            var updateCustomerCommand = new UpdateBookStoreCustomerCommand
             {
                 Id = 1,
                 IsSeller = true,
