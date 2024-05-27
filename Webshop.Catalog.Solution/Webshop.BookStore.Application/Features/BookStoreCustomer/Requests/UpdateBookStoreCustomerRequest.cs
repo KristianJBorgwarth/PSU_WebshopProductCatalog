@@ -13,7 +13,7 @@ namespace Webshop.BookStore.Application.Features.BookStoreCustomer.Requests
         {
             public Validator()
             {
-                RuleFor(x => x.Id).NotNull().WithMessage(Errors.General.ValueIsRequired(nameof(Id)).Code).GreaterThan(0)
+                RuleFor(x => x.Id).NotNull().WithMessage(Errors.General.ValueIsRequired(nameof(Id)).Code).GreaterThanOrEqualTo(0)
                     .WithMessage(Errors.General.ValueTooSmall(nameof(Id), 1).Code);
 
                 RuleFor(x => x.IsSeller)

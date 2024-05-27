@@ -11,7 +11,7 @@ public class CreateOrderRequest
     {
         public Validator()
         {
-            RuleFor(x => x.BuyerId).NotNull().WithMessage(Errors.General.ValueIsRequired(nameof(BuyerId)).Code).GreaterThan(0)
+            RuleFor(x => x.BuyerId).NotNull().WithMessage(Errors.General.ValueIsRequired(nameof(BuyerId)).Code).GreaterThanOrEqualTo(0)
                 .WithMessage(Errors.General.ValueTooSmall(nameof(BuyerId), 1).Code);
         }
     }

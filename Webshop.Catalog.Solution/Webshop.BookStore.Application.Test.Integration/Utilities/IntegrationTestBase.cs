@@ -19,11 +19,11 @@ public class IntegrationTestBase : IDisposable
         client = factory.CreateClient();
     }
 
-    public virtual void Dispose()
+    public void Dispose()
     {
-        db.BookstoreCustomers.ExecuteDelete();
-        db.Books.ExecuteDelete();
-        db.Orders.ExecuteDelete();
         db.OrderItems.ExecuteDelete();
+        db.Orders.ExecuteDelete();
+        db.Books.ExecuteDelete();
+        db.BookstoreCustomers.ExecuteDelete();
     }
 }

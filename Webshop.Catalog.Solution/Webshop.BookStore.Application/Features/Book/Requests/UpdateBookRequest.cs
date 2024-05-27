@@ -18,7 +18,7 @@ public class UpdateBookRequest
         {
             RuleFor(r => r.Id)
                 .NotNull().WithMessage(Errors.General.ValueIsRequired(nameof(Id)).Code)
-                .GreaterThan(0).WithMessage(Errors.General.ValueTooSmall(nameof(Id), 1).Code);
+                .GreaterThanOrEqualTo(0).WithMessage(Errors.General.ValueTooSmall(nameof(Id), 1).Code);
             RuleFor(r => r.Title).NotEmpty().WithMessage(Errors.General.ValueIsRequired(nameof(Title)).Code);
             RuleFor(r => r.Author).NotEmpty().WithMessage(Errors.General.ValueIsRequired(nameof(Author)).Code);
             RuleFor(r => r.Description).NotEmpty().WithMessage(Errors.General.ValueIsRequired(nameof(Description)).Code);

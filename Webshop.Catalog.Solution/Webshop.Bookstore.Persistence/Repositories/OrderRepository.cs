@@ -26,7 +26,8 @@ public class OrderRepository : IOrderRepository
 
     public async Task<Order> GetById(int id)
     {
-        throw new NotImplementedException();
+        var order = await _context.Orders.FindAsync(id);
+        return order;
     }
 
     public async Task<IEnumerable<Order>> GetAll()
@@ -36,6 +37,7 @@ public class OrderRepository : IOrderRepository
 
     public async Task UpdateAsync(Order entity)
     {
-        throw new NotImplementedException();
+        _context.Orders.Update(entity);
+        await _context.SaveChangesAsync();
     }
 }
