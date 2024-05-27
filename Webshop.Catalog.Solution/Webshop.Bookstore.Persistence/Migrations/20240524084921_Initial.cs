@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Webshopt.Bookstore.Persistence.Migrations
+namespace Webshop.Bookstore.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

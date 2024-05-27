@@ -21,6 +21,16 @@ public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Res
 
     public async Task<Result> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var order = _mapper.Map<Domain.AggregateRoots.Order>(request);
+            await _orderRepository.CreateAsync(order);
+            return Result.Ok();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogCritical(ex, ex.Message);
+            return Result.Fail(Errors.General.UnspecifiedError(ex.Message));
+        }
     }
 }

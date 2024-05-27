@@ -18,7 +18,7 @@ public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, Resul
 
     public async Task<Result> Handle(CreateBookCommand request, CancellationToken cancellationToken)
     {
-        Result<CategoryResult> result =  await _categoryService.GetCategoryAsync(request.CategoryId);
+        Result<CategoryResult> result = await _categoryService.GetCategoryAsync(request.CategoryId);
 
         if (!result.Success) return Result.Fail(result.Error);
 
@@ -34,12 +34,11 @@ public class CreateBookCommandHandler : IRequestHandler<CreateBookCommand, Resul
                 SellerId = request.SellerId
             };
             await _bookRepository.CreateAsync(book);
+            return Result.Ok();
         }
         catch (Exception e)
         {
             return Result.Fail(Errors.General.UnspecifiedError(e.Message));
         }
-
-        return Result.Ok();
     }
 }

@@ -8,6 +8,7 @@ using static System.String;
 
 namespace Webshop.BookStore.Api.Controllers;
 
+[Route("api/bookstore/order")]
 public class OrderController : BaseController
 {
     private readonly IMediator _mediator;
