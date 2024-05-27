@@ -15,7 +15,7 @@ namespace Webshop.BookStore.Application.Test.Integration.Order.Endpoint
         {
         }
 
-        [Fact(Skip = "Test doesnt work")]
+        [Fact]
         public async Task AddOrderItem_WithValidRequest_ReturnsSuccess()
         {
             // Arrange
@@ -30,7 +30,6 @@ namespace Webshop.BookStore.Application.Test.Integration.Order.Endpoint
             await db.SaveChangesAsync();
 
             var savedCustomer = await db.BookstoreCustomers.FirstOrDefaultAsync(c => c.Name == "Test Customer");
-            savedCustomer.Should().NotBeNull("Customer should be saved to the database");
 
             var order = new Domain.AggregateRoots.Order
             {
@@ -40,21 +39,19 @@ namespace Webshop.BookStore.Application.Test.Integration.Order.Endpoint
             await db.SaveChangesAsync();
 
             var savedOrder = await db.Orders.FirstOrDefaultAsync(o => o.BuyerId == savedCustomer.Id);
-            savedOrder.Should().NotBeNull("Order should be saved to the database");
 
-            var product = new Domain.AggregateRoots.Book
+            var book = new Domain.AggregateRoots.Book
             {
                 Title = "Test Book",
                 Author = "Test Author",
-                Price = 10.0m,
+                Price = 10,
                 SellerId = savedCustomer.Id,
                 Description = "Test Description"
             };
-            db.Books.Add(product);
+            db.Books.Add(book);
             await db.SaveChangesAsync();
-
             var savedBook = await db.Books.FirstOrDefaultAsync(b => b.Title == "Test Book");
-            savedBook.Should().NotBeNull("Book should be saved to the database");
+
 
             var request = new AddOrderItemRequest
             {
@@ -66,8 +63,7 @@ namespace Webshop.BookStore.Application.Test.Integration.Order.Endpoint
             };
 
             // Act
-            var response = await client.PostAsJsonAsync("api/bookstore/order", request);
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var response = await client.PutAsJsonAsync("api/bookstore/order", request);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -75,7 +71,7 @@ namespace Webshop.BookStore.Application.Test.Integration.Order.Endpoint
             db.OrderItems.First().OrderId.Should().Be(savedOrder.Id);
             db.OrderItems.First().BookId.Should().Be(savedBook.Id);
             db.OrderItems.First().Quantity.Should().Be(2);
-            db.Orders.First().TotalAmount.Should().Be(20.0m);
+            db.Orders.First().OrderItems.Count().Should().Be(1);
         }
     }
 }

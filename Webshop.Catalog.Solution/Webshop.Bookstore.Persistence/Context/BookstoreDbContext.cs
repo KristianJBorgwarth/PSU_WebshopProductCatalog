@@ -45,10 +45,9 @@ public class BookstoreDbContext : DbContext
 
         modelBuilder.Entity<OrderItem>(entity =>
         {
-            entity.HasKey(oi => oi.Id); // Change primary key to Id
+            entity.HasKey(oi => oi.Id);
             entity.Property(oi => oi.Price).HasColumnType("decimal(18,2)");
 
-            // Set up the relationship with Order
             entity.HasOne<Order>()
                 .WithMany(o => o.OrderItems)
                 .HasForeignKey(oi => oi.OrderId);
