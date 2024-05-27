@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Webshop.Bookstore.Persistence.Migrations
+namespace Webshopt.Bookstore.Persistence.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration
@@ -82,7 +82,9 @@ namespace Webshop.Bookstore.Persistence.Migrations
                 name: "OrderItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
                     BookId = table.Column<int>(type: "int", nullable: false),
                     BookTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -92,10 +94,10 @@ namespace Webshop.Bookstore.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderItems", x => new { x.BookId, x.Id });
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderItems_Orders_BookId",
-                        column: x => x.BookId,
+                        name: "FK_OrderItems_Orders_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -105,6 +107,11 @@ namespace Webshop.Bookstore.Persistence.Migrations
                 name: "IX_Books_SellerId",
                 table: "Books",
                 column: "SellerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_BuyerId",
