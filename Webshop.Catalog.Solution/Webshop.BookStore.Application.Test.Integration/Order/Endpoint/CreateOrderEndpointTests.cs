@@ -58,7 +58,9 @@ public class CreateOrderEndpointTests : IntegrationTestBase
         var responseContent = await response.Content.ReadAsStringAsync();
 
         // Assert
+        db.BookstoreCustomers.Count().Should().Be(0);
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         db.Orders.Should().BeEmpty();
+
     }
 }

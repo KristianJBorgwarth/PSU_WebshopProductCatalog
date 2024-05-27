@@ -22,10 +22,10 @@ public class CreateBookRequest
                 .WithMessage(Errors.General.ValueIsRequired(nameof(Author)).Code);
             RuleFor(r=> r.Description).NotEmpty()
                 .WithMessage(Errors.General.ValueIsRequired(nameof(Description)).Code);
-            RuleFor(r => r.Price).NotNull().WithMessage(Errors.General.ValueIsRequired(nameof(Price)).Code).GreaterThan(0)
+            RuleFor(r => r.Price).NotNull().WithMessage(Errors.General.ValueIsRequired(nameof(Price)).Code).GreaterThanOrEqualTo(0)
                 .WithMessage(Errors.General.ValueTooSmall(nameof(Price), 0).Code);
             RuleFor(r => r.CategoryId).NotNull().WithMessage(Errors.General.ValueIsRequired(nameof(CategoryId)).Code);
-            RuleFor(r => r.SellerId).NotNull().WithMessage(Errors.General.ValueIsRequired(nameof(SellerId)).Code).GreaterThan(0)
+            RuleFor(r => r.SellerId).NotNull().WithMessage(Errors.General.ValueIsRequired(nameof(SellerId)).Code).GreaterThanOrEqualTo(0)
                 .WithMessage(Errors.General.ValueTooSmall(nameof(SellerId), 1).Code);
         }
     }

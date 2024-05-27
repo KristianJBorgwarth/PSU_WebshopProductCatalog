@@ -17,7 +17,7 @@ public class AddOrderItemRequest
         {
             RuleFor(r => r.OrderId)
                 .NotNull().WithMessage(Errors.General.ValueIsRequired(nameof(OrderId)).Code)
-                .GreaterThan(0).WithMessage(Errors.General.ValueTooSmall(nameof(OrderId), 1).Code);
+                .GreaterThanOrEqualTo(0).WithMessage(Errors.General.ValueTooSmall(nameof(OrderId), 1).Code);
             RuleFor(r => r.BookId).NotNull().WithMessage(Errors.General.ValueIsRequired(nameof(BookId)).Code)
                 .GreaterThan(0).WithMessage(Errors.General.ValueTooSmall(nameof(BookId), 1).Code);
             RuleFor(r => r.BookTitle).NotEmpty().WithMessage(Errors.General.ValueIsRequired(nameof(BookTitle)).Code);

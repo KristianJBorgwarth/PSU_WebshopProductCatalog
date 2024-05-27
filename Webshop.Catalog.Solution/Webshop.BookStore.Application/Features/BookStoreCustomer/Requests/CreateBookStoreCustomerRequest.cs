@@ -13,7 +13,7 @@ public class CreateBookStoreCustomerRequest
     {
         public Validator()
         {
-            RuleFor(x => x.CustomerId).NotNull().WithMessage(Errors.General.ValueIsRequired(nameof(CustomerId)).Code).GreaterThan(0)
+            RuleFor(x => x.CustomerId).NotNull().WithMessage(Errors.General.ValueIsRequired(nameof(CustomerId)).Code).GreaterThanOrEqualTo(0)
                 .WithMessage(Errors.General.ValueTooSmall(nameof(CustomerId), 1).Code);
 
             RuleFor(x => x.IsSeller)
