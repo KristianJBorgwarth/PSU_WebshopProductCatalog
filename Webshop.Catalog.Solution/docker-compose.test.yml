@@ -1,84 +1,80 @@
-version: "4.1"
+version: "3.8"
 services:
   help:
-    # SeQ is a framework for logging of exceptions etc
-    container_name: webshophelp
+    container_name: webshophelp_test
     image: brhv/webshophelp
     restart: unless-stopped
     ports:
-      - 8000:80
+      - 18000:80
     networks:
-      - backtier
+      - testbacktier
     environment:
-      - SERVER=webshopdatabase
+      - SERVER=webshopdatabase_test
   seq:
-    # SeQ is a framework for logging of exceptions etc
-    container_name: SeQ
+    container_name: SeQ_test
     image: datalust/seq:latest
     restart: unless-stopped
     ports:
-      - 8081:80
-      - 5341:5341
+      - 18081:80
+      - 15341:5341
     networks:
-      - backtier
+      - testbacktier
     environment:
       - ACCEPT_EULA=Y
   smtp4dev:
-    # development time email server and client, easy to test sending emails
-    container_name: smtp4dev
+    container_name: smtp4dev_test
     image: rnwood/smtp4dev:latest
     ports:
-      - 8082:80
-      - 26:25
+      - 18082:80
+      - 1026:25
     networks:
-      - backtier
+      - testbacktier
   paymentapi:
-   # the payment API
-    container_name: webshop.payment
+    container_name: webshop_payment_test
     image: brhv/webshoppaymentapi
     restart: unless-stopped
     ports:
-      - 8083:80
+      - 18083:80
     networks:
-      - backtier
+      - testbacktier
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=webshopdatabase_test;Database=psuwebshop;User=sa;Password=PSU@password;
   catalogapi:
-  # the catalog API
-    container_name: webshop.catalog
+    container_name: webshop_catalog_test
     image: brhv/webshopcatalogapi
     restart: unless-stopped
     ports:
-        - 8084:80
+      - 18084:80
     networks:
-        - backtier
+      - testbacktier
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=webshopdatabase_test;Database=psuwebshop;User=sa;Password=PSU@password;
   customerapi:
-  # the customer API
-    container_name: webshop.customer
+    container_name: webshop_customer_test
     image: brhv/webshopcustomerapi
     restart: unless-stopped
     ports:
-        - 8085:80
+      - 18085:80
     networks:
-        - backtier
+      - testbacktier
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=webshopdatabase_test;Database=psuwebshop;User=sa;Password=PSU@password;
   sqlexpress:
-  #the sql server
-    container_name: webshopdatabase
+    container_name: webshopdatabase_test
     image: mcr.microsoft.com/mssql/server:latest
     restart: unless-stopped
     ports:
-        - 1433:1433
+      - 11433:1433
     environment:
-        - ACCEPT_EULA=Y
-        - SA_PASSWORD=PSU@password
-        - MSSQL_PID=Express
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=PSU@password
+      - MSSQL_PID=Express
     volumes:
-        - ./data:/var/opt/mssql/data
+      - ./test_data:/var/opt/mssql/data
     networks:
-        - backtier
+      - testbacktier
 networks:
-  # The presence of these objects is sufficient to define them
-  backtier: {}
+  testbacktier: {}
 
-
-
-
-
+volumes:
+  mssql_data: {}

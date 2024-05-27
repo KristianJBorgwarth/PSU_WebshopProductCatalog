@@ -3,6 +3,7 @@
   <component name="UserContentModel">
     <attachedFolders>
       <Path>../.github/workflows</Path>
+      <Path>custom-mssql-server</Path>
     </attachedFolders>
     <explicitIncludes />
     <explicitExcludes />
