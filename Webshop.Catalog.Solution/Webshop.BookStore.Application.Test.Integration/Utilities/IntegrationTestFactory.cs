@@ -76,6 +76,8 @@ public class IntegrationTestFactory<TProgram, TDbContext> : WebApplicationFactor
     public new async Task DisposeAsync()
     {
         await _dbContainer.StopAsync();
+        await _dbContainer.DisposeAsync();
+        _compositeService.Stop();
         _compositeService.Dispose();
     }
 

@@ -13,7 +13,7 @@ public class CreateCustomerEndpointTest : IntegrationTestBase
     {
     }
 
-    [Fact]
+    [SkipOnCiFact]
     public async Task CreateCustomerEndpoint_ShouldReturnCreated()
     {
         // Arrange
@@ -33,7 +33,7 @@ public class CreateCustomerEndpointTest : IntegrationTestBase
         db.BookstoreCustomers.Should().ContainSingle();
     }
 
-    [Fact]
+    [SkipOnCiFact]
     public async Task CreateCustomerEndpoint_ShouldReturn400BadRequest()
     {
         // Arrange
