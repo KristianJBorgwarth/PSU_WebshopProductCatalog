@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.MsSql;
+using Webshop.BookStore.Application.Contracts.Persistence;
+using Webshop.Bookstore.Persistence.Repositories;
 
 namespace Webshop.BookStore.Application.Test.Integration.Utilities;
 

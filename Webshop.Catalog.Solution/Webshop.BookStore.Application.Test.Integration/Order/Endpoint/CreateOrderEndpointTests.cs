@@ -7,9 +7,9 @@ using Webshop.Bookstore.Persistence.Context;
 
 namespace Webshop.BookStore.Application.Test.Integration.Order.Endpoint;
 
-public class CreateEndpointTests : IntegrationTestBase
+public class CreateOrderEndpointTests : IntegrationTestBase
 {
-    public CreateEndpointTests(IntegrationTestFactory<Program, BookstoreDbContext> factory) : base(factory)
+    public CreateOrderEndpointTests(IntegrationTestFactory<Program, BookstoreDbContext> factory) : base(factory)
     {
 
     }
