@@ -8,7 +8,7 @@ using Webshop.Bookstore.Persistence.Context;
 
 #nullable disable
 
-namespace Webshopt.Bookstore.Persistence.Migrations
+namespace Webshop.Bookstore.Persistence.Migrations
 {
     [DbContext(typeof(BookstoreDbContext))]
     partial class BookstoreDbContextModelSnapshot : ModelSnapshot

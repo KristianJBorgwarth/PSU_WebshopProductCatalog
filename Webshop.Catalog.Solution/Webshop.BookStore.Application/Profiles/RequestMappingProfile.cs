@@ -5,6 +5,8 @@ using Webshop.BookStore.Application.Features.Book.Requests;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.CreateCustomer;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.UpdateCustomer;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Requests;
+using Webshop.BookStore.Application.Features.Order.Commands.CreateOrder;
+using Webshop.BookStore.Application.Features.Order.Requests;
 
 namespace Webshop.BookStore.Application.Profiles;
 

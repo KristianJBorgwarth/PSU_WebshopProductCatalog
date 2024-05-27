@@ -9,7 +9,7 @@ using Webshop.Bookstore.Persistence.Context;
 
 #nullable disable
 
-namespace Webshopt.Bookstore.Persistence.Migrations
+namespace Webshop.Bookstore.Persistence.Migrations
 {
     [DbContext(typeof(BookstoreDbContext))]
     [Migration("20240524084921_Initial")]

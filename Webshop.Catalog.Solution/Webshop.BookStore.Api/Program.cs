@@ -90,6 +90,7 @@ builder.Services.AddDbContext<BookstoreDbContext>(options =>
 #region Repository setup
 builder.Services.AddScoped<IBookStoreCustomerRepository, BookStoreCustomerRepository>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 #endregion
 
 builder.Services.AddControllers();
