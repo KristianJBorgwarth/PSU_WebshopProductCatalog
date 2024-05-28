@@ -82,6 +82,7 @@
     <None Include="Scripts\Data\InsertData.sql" />
     <None Include="Scripts\Queries\FindHowManyCopiesOfThisBookInEachLibrary.sql" />
     <Build Include="Scripts\Triggers\CheckMaxBooksLoaned.sql" />
+    <Build Include="Scripts\Stored Procedure\LoanBook.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Data\Testing Scripts.sql" />
