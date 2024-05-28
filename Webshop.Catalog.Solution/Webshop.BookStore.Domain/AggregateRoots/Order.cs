@@ -2,13 +2,23 @@
 
 namespace Webshop.BookStore.Domain.AggregateRoots;
 
+public enum OrderStatus
+{
+    Pending,
+    Processing,
+    Shipped,
+    Delivered,
+    Cancelled
+}
 public class Order : AggregateRoot
 {
     public int BuyerId { get; set; }
     public List<OrderItem> OrderItems { get; set; } = new();
     public decimal TotalAmount { get; set; }
-    public DateTime OrderDate { get; set; }
     public bool DiscountApplied { get; set; }
+
+    public OrderStatus Status { get; set; }
+    public DateTime OrderDate { get; set; }
 
     public void AddItem(OrderItem item)
     {
