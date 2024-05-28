@@ -46,17 +46,28 @@ VALUES (1, '12345678', '01011995-1234'),
        (9, '90123456', '09091982-7185');
 
 
+--Annette	20E0B8C3-EDCA-42EF-8B9C-6763DEB2BFF6
+--Oliver	27577D17-B838-43BE-AFAC-0A9E5E568B9F
+--Kristian	9F9931EE-500D-40F8-8FCB-722B3D9F1E20
+--Arosan	B3C734CD-D1B2-4C9D-9696-9DCCDF52B072
+--Joe Biden	FB2425A5-C16A-4829-A9D9-73EACD7A3469
+--Lionel Messi	D5F3BF61-A5BC-4E1F-9A10-6AA607655DF8
+--Gianna	2D742D46-5AA1-40F5-B2A3-1F25BCEBDC2F
+--Nadeem	503D551D-E3B5-4BC9-96A7-4743F903C83F
+--Brain	386EB091-D2FB-49FA-A5D3-1930756460DD
+
 -- Insert Member Cards
 INSERT INTO [dbo].[MemberCard] ([MemberCardID], [BookLoanLimit], [ExpireDate], [Photo], [LoanPeriod], [MemberSSN])
-VALUES (NEWID(), 5, DATEADD(YEAR, 4, GETDATE()), NULL, 21, '02021996-5678'),  -- Oliver
-       (NEWID(), 5, DATEADD(YEAR, 4, GETDATE()), NULL, 21, '03031997-9101'),  -- Kristian
-       (NEWID(), 5, DATEADD(YEAR, 4, GETDATE()), NULL, 21, '04041998-1121'),  -- Arosan
-       (NEWID(), 5, DATEADD(YEAR, 4, GETDATE()), NULL, 21, '05051999-3141'),  -- Joe Biden
-       (NEWID(), 5, DATEADD(YEAR, 4, GETDATE()), NULL, 21, '06061994-4152'),  -- Lionel Messi
-       (NEWID(), 5, DATEADD(YEAR, 4, GETDATE()), NULL, 93, '07071980-5163'),  -- Gianna
-       (NEWID(), 5, DATEADD(YEAR, 4, GETDATE()), NULL, 93, '08081981-6174'),  -- Nadeem
-       (NEWID(), 5, DATEADD(YEAR, 4, GETDATE()), NULL, 93, '09091982-7185'),  -- Brain
-       (NEWID(), 5, DATEADD(YEAR, -1, GETDATE()), NULL, 21, '01011995-1234'); -- Annette expires this year
+VALUES 
+       ('20E0B8C3-EDCA-42EF-8B9C-6763DEB2BFF6', 5, DATEADD(YEAR, -1, GETDATE()), NULL, 21, '01011995-1234'), -- Annette expires this year
+       ('27577D17-B838-43BE-AFAC-0A9E5E568B9F', 5, DATEADD(YEAR, 4, GETDATE()), NULL, 21, '02021996-5678'),  -- Oliver
+       ('9F9931EE-500D-40F8-8FCB-722B3D9F1E20', 5, DATEADD(YEAR, 4, GETDATE()), NULL, 21, '03031997-9101'),  -- Kristian
+       ('B3C734CD-D1B2-4C9D-9696-9DCCDF52B072', 5, DATEADD(YEAR, 4, GETDATE()), NULL, 21, '04041998-1121'),  -- Arosan
+       ('FB2425A5-C16A-4829-A9D9-73EACD7A3469', 5, DATEADD(YEAR, 4, GETDATE()), NULL, 21, '05051999-3141'),  -- Joe Biden
+       ('D5F3BF61-A5BC-4E1F-9A10-6AA607655DF8', 5, DATEADD(YEAR, 4, GETDATE()), NULL, 21, '06061994-4152'),  -- Lionel Messi
+       ('2D742D46-5AA1-40F5-B2A3-1F25BCEBDC2F', 5, DATEADD(YEAR, 4, GETDATE()), NULL, 93, '07071980-5163'),  -- Gianna
+       ('503D551D-E3B5-4BC9-96A7-4743F903C83F', 5, DATEADD(YEAR, 4, GETDATE()), NULL, 93, '08081981-6174'),  -- Nadeem
+       ('386EB091-D2FB-49FA-A5D3-1930756460DD', 5, DATEADD(YEAR, 4, GETDATE()), NULL, 93, '09091982-7185');  -- Brain
 
 -- Update MemberCardID in Member table
 UPDATE [dbo].[Member]
@@ -149,13 +160,13 @@ VALUES
 INSERT INTO [dbo].[Book] ([BookID], [Title], [OnLoan], [Subject], [ISBN], [LibraryID])
 VALUES 
 -- Books
-(NEWID(), 'Clean Code: A Handbook of Agile Software Craftsmanship', 0, 'Software Development', '9780134685991', 'GeorgiaTechLibrary'),
+('EDB19449-4CEB-4907-88B5-75F0E17163A3', 'Clean Code: A Handbook of Agile Software Craftsmanship', 0, 'Software Development', '9780134685991', 'GeorgiaTechLibrary'),
 (NEWID(), 'Clean Code: A Handbook of Agile Software Craftsmanship', 0, 'Software Development', '9780134685991', 'GeorgiaTechLibrary'),
 
-(NEWID(), 'Agile Software Development, Principles, Patterns, and Practices', 0, 'Software Development', '9780132350884', 'GeorgiaTechLibrary'),
+('D7C37DA3-62AA-4A70-8866-03AF9FCD64FC', 'Agile Software Development, Principles, Patterns, and Practices', 0, 'Software Development', '9780132350884', 'GeorgiaTechLibrary'),
 (NEWID(), 'Agile Software Development, Principles, Patterns, and Practices', 0, 'Software Development', '9780132350884', 'GeorgiaTechLibrary'),
 
-(NEWID(), 'JavaScript: The Good Parts', 0, 'Web Development', '9781491950357', 'GeorgiaTechLibrary'),
+('436AD98A-89D7-4713-B20E-CD0599421D34', 'JavaScript: The Good Parts', 0, 'Web Development', '9781491950357', 'GeorgiaTechLibrary'),
 (NEWID(), 'JavaScript: The Good Parts', 0, 'Web Development', '9781491950357', 'GeorgiaTechLibrary'),
 
 (NEWID(), 'The C Programming Language', 0, 'Programming', '9780131103627', 'GeorgiaTechLibrary'),
@@ -163,20 +174,31 @@ VALUES
 (NEWID(), 'Design Patterns: Elements of Reusable Object-Oriented Software', 0, 'Software Design', '9780201616224', 'GeorgiaTechLibrary'),
 
 (NEWID(), 'Patterns of Enterprise Application Architecture', 0, 'Software Design', '9780137081073', 'GeorgiaTechLibrary'),
-(NEWID(), 'Python for Data Analysis', 0, 'Programming', '9781119038643', 'GeorgiaTechLibrary'),
+('88641E06-1E1F-4FD0-8C84-F0C31230C878', 'Python for Data Analysis', 0, 'Programming', '9781119038643', 'GeorgiaTechLibrary'),
 (NEWID(), 'Python for Data Analysis', 0, 'Programming', '9781119038643', 'GeorgiaTechLibrary'),
 
+('D5620E39-4588-4B9D-98D1-30D1644467AD', 'Kubernetes: Up and Running', 0, 'Cloud Computing', '9781492045526', 'GeorgiaTechLibrary'),
 (NEWID(), 'Kubernetes: Up and Running', 0, 'Cloud Computing', '9781492045526', 'GeorgiaTechLibrary'),
-(NEWID(), 'Kubernetes: Up and Running', 0, 'Cloud Computing', '9781492045526', 'GeorgiaTechLibrary'),
+
+('23E00031-6FD4-48FF-AF51-01427F342C4A', 'Effective Modern C++', 0, 'Programming', '9780134757599', 'GeorgiaTechLibrary'),
+('82A92930-6DD3-472B-B5D2-01ED05F85E54', 'Effective Modern C++', 0, 'Programming', '9780134757599', 'GeorgiaTechLibrary'),
 
 (NEWID(), 'Effective Modern C++', 0, 'Programming', '9780134757599', 'GeorgiaTechLibrary'),
 (NEWID(), 'Effective Modern C++', 0, 'Programming', '9780134757599', 'GeorgiaTechLibrary'),
+(NEWID(), 'Effective Modern C++', 0, 'Programming', '9780134757599', 'GeorgiaTechLibrary'),
+(NEWID(), 'Effective Modern C++', 0, 'Programming', '9780134757599', 'GeorgiaTechLibrary'),
+(NEWID(), 'Effective Modern C++', 0, 'Programming', '9780134757599', 'UniversityLibrary'),
+(NEWID(), 'Effective Modern C++', 0, 'Programming', '9780134757599', 'UniversityLibrary'),
+(NEWID(), 'Effective Modern C++', 0, 'Programming', '9780134757599', 'CityLibrary'),
+(NEWID(), 'Effective Modern C++', 0, 'Programming', '9780134757599', 'CityLibrary'),
+(NEWID(), 'Effective Modern C++', 0, 'Programming', '9780134757599', 'CityLibrary'),
+(NEWID(), 'Effective Modern C++', 0, 'Programming', '9780134757599', 'CityLibrary'),
 
-(NEWID(), 'Introduction to Algorithms', 0, 'Computer Science', '9780262033848', 'GeorgiaTechLibrary'),
+('E1C9C631-D4E6-4BD0-8E2D-202CA713A498', 'Introduction to Algorithms', 0, 'Computer Science', '9780262033848', 'GeorgiaTechLibrary'),
 (NEWID(), 'Introduction to Algorithms', 0, 'Computer Science', '9780262033848', 'GeorgiaTechLibrary'),
 
-(NEWID(), 'Software Architecture in Practice', 0, 'Software Engineering', '9780134177304', 'GeorgiaTechLibrary'),
-(NEWID(), 'Software Architecture in Practice', 0, 'Software Engineering', '9780134177304', 'GeorgiaTechLibrary');
+('B9923AD6-72F7-4F7B-9518-1D430CF7A7F8', 'Software Architecture in Practice', 0, 'Software Engineering', '9780134177304', 'GeorgiaTechLibrary'),
+('BCF8433C-4D9F-4258-939B-C8893E8AB9C5', 'Software Architecture in Practice', 0, 'Software Engineering', '9780134177304', 'GeorgiaTechLibrary');
 
 -- Maps
 INSERT INTO [dbo].[Book] ([BookID], [Title], [OnLoan], [Subject], [ISBN], [LibraryID])
@@ -218,18 +240,9 @@ VALUES
 
 (NEWID(), 'TopGear Magazine', 0, 'Automotive', '9780528006308', 'GeorgiaTechLibrary');
 
---Annette	20E0B8C3-EDCA-42EF-8B9C-6763DEB2BFF6
---Oliver	27577D17-B838-43BE-AFAC-0A9E5E568B9F
---Kristian	9F9931EE-500D-40F8-8FCB-722B3D9F1E20
---Arosan	B3C734CD-D1B2-4C9D-9696-9DCCDF52B072
---Joe Biden	FB2425A5-C16A-4829-A9D9-73EACD7A3469
---Lionel Messi	D5F3BF61-A5BC-4E1F-9A10-6AA607655DF8
---Gianna	2D742D46-5AA1-40F5-B2A3-1F25BCEBDC2F
---Nadeem	503D551D-E3B5-4BC9-96A7-4743F903C83F
---Brain	386EB091-D2FB-49FA-A5D3-1930756460DD
 
 -- Insert BookLoaned
-INSERT INTO [dbo].[BooksLoaned] ([LoanID], [BookID], [MemberCardID], [LoanDate], [ReturnDate])
+INSERT INTO [dbo].[BooksLoaned] ([LoanID], [BookID], [MemberCardID], [LoanDate], [DeadlineDate])
 VALUES
 (1, '23E00031-6FD4-48FF-AF51-01427F342C4A', '9F9931EE-500D-40F8-8FCB-722B3D9F1E20', DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()), DATEADD(DAY, 21, DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()))), -- Annette
 (2, '82A92930-6DD3-472B-B5D2-01ED05F85E54', '27577D17-B838-43BE-AFAC-0A9E5E568B9F', DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()), DATEADD(DAY, 21, DATEADD(DAY, ABS(CHECKSUM(NEWID())) % 1095, GETDATE()))), -- Oliver
