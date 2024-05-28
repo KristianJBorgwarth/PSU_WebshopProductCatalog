@@ -8,6 +8,7 @@ public class Order : AggregateRoot
     public List<OrderItem> OrderItems { get; set; } = new();
     public decimal TotalAmount { get; set; }
     public DateTime OrderDate { get; set; }
+    public bool DiscountApplied { get; set; }
 
     public void AddItem(OrderItem item)
     {
@@ -26,11 +27,16 @@ public class Order : AggregateRoot
     /// <exception cref="ArgumentException">exception thrown with invalid discount</exception>
     public void ApplyDiscount(decimal discount)
     {
+        if(DiscountApplied)
+        {
+            throw new InvalidOperationException("Discount already applied to order");
+        }
         if (discount is < 0 or > 0.15m)
         {
             throw new ArgumentException("Discount must be between 0 and 15%");
         }
         TotalAmount -= TotalAmount * discount;
+        DiscountApplied = true;
     }
 
     private void CalculateTotalAmount()

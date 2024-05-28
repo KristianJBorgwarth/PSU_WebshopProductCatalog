@@ -46,7 +46,7 @@ public class OrderController : BaseController
     }
 
     [HttpPut]
-    [Route("")]
+    [Route("orderItem")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> AddItemToOrder(AddOrderItemRequest request)
@@ -68,7 +68,7 @@ public class OrderController : BaseController
     }
 
     [HttpPut]
-    [Route("")]
+    [Route("discount")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> ApplyDiscount(ApplyDiscountRequest request)

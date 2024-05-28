@@ -63,7 +63,7 @@ namespace Webshop.BookStore.Application.Test.Integration.Order.Endpoint
             };
 
             // Act
-            var response = await client.PutAsJsonAsync("api/bookstore/order", request);
+            var response = await client.PutAsJsonAsync("api/bookstore/order/orderItem", request);
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
