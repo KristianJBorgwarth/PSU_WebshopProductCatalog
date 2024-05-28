@@ -19,6 +19,20 @@ public class Order : AggregateRoot
         CalculateTotalAmount();
     }
 
+    /// <summary>
+    /// Business logic to apply discount to the order
+    /// </summary>
+    /// <param name="discount">discount applied to order total</param>
+    /// <exception cref="ArgumentException">exception thrown with invalid discount</exception>
+    public void ApplyDiscount(decimal discount)
+    {
+        if (discount is < 0 or > 0.15m)
+        {
+            throw new ArgumentException("Discount must be between 0 and 15%");
+        }
+        TotalAmount -= TotalAmount * discount;
+    }
+
     private void CalculateTotalAmount()
     {
         TotalAmount = OrderItems.Sum(x => x.Price * x.Quantity);
