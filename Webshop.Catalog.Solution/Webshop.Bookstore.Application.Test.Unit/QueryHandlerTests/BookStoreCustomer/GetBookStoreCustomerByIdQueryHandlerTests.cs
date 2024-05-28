@@ -58,7 +58,7 @@ namespace Webshop.Bookstore.Application.Test.Unit.QueryHandlerTests.BookStoreCus
 
             //Assert
             result.Success.Should().BeTrue();
-            result.Error.Should().BeEquivalentTo(bookStoreCustomerDto);
+            result.Value.Should().BeEquivalentTo(bookStoreCustomerDto);
             A.CallTo(() => _fakeCustomerRepository.GetById(query.id)).MustHaveHappenedOnceExactly();
             A.CallTo(() => _fakeMapper.Map<BookStoreCustomerDto>(bookStoreCustomer)).MustHaveHappenedOnceExactly();
 

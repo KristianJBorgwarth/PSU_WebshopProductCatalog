@@ -76,7 +76,7 @@ public class BookstoreCustomerController : BaseController
         GetBookStoreCustomerByIdQuery query = new GetBookStoreCustomerByIdQuery() { id = id}; 
         var result = await _mediator.Send(query);
 
-        if (!result.Success) return BadRequest(result.Error);
+        if (!result.Success) return Error(result.Error);
         return result.Value != null ? Ok(result.Value) : NoContent();
     }
 }
