@@ -81,11 +81,16 @@
     <Build Include="dbo\Tables\BookExpirationDateNotice.sql" />
     <None Include="Scripts\Data\InsertData.sql" />
     <None Include="Scripts\Queries\FindHowManyCopiesOfThisBookInEachLibrary.sql" />
+    <Build Include="Scripts\Triggers\CheckMaxBooksLoaned.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Data\Testing Scripts.sql" />
     <None Include="Scripts\Queries\MembersWhoHaveLoanMoreThanOneBook.sql" />
     <None Include="Scripts\Queries\FindHowManyCopiesOfThisBookIsOwnByChoosenLibrary.sql" />
+    <None Include="Scripts\Functions\CountBooksCurrentlyLoanedByMember.sql" />
+    <None Include="Scripts\Triggers\CheckMaxBooksLoaned_IntegrationWithFunctions.sql" />
+    <None Include="Scripts\Queries\Top3MostBorrowedBooks.sql" />
+    <None Include="Scripts\Queries\FindMembersWhoHaveBorrowedBookInThisPeriod.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="Georgia_Tech_Library_Database.refactorlog" />
