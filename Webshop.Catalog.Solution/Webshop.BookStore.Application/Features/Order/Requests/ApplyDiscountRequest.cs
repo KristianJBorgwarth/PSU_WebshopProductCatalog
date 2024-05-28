@@ -3,12 +3,12 @@ using Webshop.Domain.Common;
 
 namespace Webshop.BookStore.Application.Features.Order.Requests;
 
-public class ProcessOrderRequest
+public class ApplyDiscountRequest
 {
     public int OrderId { get; set; }
     public decimal Discount { get; set; }
 
-    public class Validator : AbstractValidator<ProcessOrderRequest>
+    public class Validator : AbstractValidator<ApplyDiscountRequest>
     {
         public Validator()
         {

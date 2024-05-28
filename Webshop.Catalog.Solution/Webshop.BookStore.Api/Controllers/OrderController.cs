@@ -71,14 +71,14 @@ public class OrderController : BaseController
     [Route("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> ProcessOrder(ProcessOrderRequest request)
+    public async Task<IActionResult> ApplyDiscount(ApplyDiscountRequest request)
     {
-        ProcessOrderRequest.Validator validator = new();
+        ApplyDiscountRequest.Validator validator = new();
         var result = await validator.ValidateAsync(request);
 
         if(result.IsValid)
         {
-            var command = _mapper.Map<ProcessOrderCommand>(request);
+            var command = _mapper.Map<ApplyDiscountCommand>(request);
             var createResult = await _mediator.Send(command);
             return createResult.Success ? Ok(createResult) : Error(createResult.Error);
         }

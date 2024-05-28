@@ -22,6 +22,6 @@ public class OrderMappingProfile : Profile
                 Quantity = src.Quantity
             }));
 
-        CreateMap<ProcessOrderRequest, ProcessOrderCommand>();
+        CreateMap<ApplyDiscountRequest, ApplyDiscountCommand>();
     }
 }
