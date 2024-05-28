@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.MsSql;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.Bookstore.Persistence.Repositories;
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace Webshop.BookStore.Application.Test.Integration.Utilities;
 

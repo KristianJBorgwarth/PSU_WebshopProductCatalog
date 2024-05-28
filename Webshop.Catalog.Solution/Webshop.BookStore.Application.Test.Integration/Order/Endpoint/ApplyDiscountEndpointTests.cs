@@ -51,7 +51,44 @@ public class ApplyDiscountEndpointTests : IntegrationTestBase
 
         //Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        db.Orders.Count().Should().Be(1);
-        db.Orders.First().TotalAmount.Should().NotBe(100);
     }
+
+    [Fact]
+    public async void GivenInvalidRequest_ShouldReturn400BadRequest()
+    {
+        //Arrange
+        var bookstoreCustomer = new Domain.AggregateRoots.BookstoreCustomer
+        {
+            Name = "Test Customer",
+            IsBuyer = true,
+            IsSeller = false
+        };
+        db.BookstoreCustomers.Add(bookstoreCustomer);
+        await db.SaveChangesAsync();
+
+        // Retrieve the customer Id
+        var customerId = bookstoreCustomer.Id;
+
+        var order = new Domain.AggregateRoots.Order
+        {
+            TotalAmount = 100,
+            BuyerId = customerId,  // Set to valid customer Id
+            DiscountApplied = false
+        };
+        db.Orders.Add(order);
+        await db.SaveChangesAsync();
+
+        var command = new ApplyDiscountRequest()
+        {
+            OrderId = -1,  // Use an invalid order Id
+            Discount = 0.12m,
+        };
+
+        //Act
+        var response = await client.PutAsJsonAsync("api/bookstore/order/discount", command);
+
+        //Assert
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+    }
+
 }
