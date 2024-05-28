@@ -7,6 +7,7 @@ using Webshop.BookStore.Application.Services;
 using Webshop.BookStore.Application.Services.CategoryService;
 using Webshop.Bookstore.Persistence.Context;
 using Webshop.BookStore.Application.Services.CustomerService;
+using Webshop.BookStore.Application.Services.PaymentService;
 using Webshop.Bookstore.Persistence.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -75,8 +76,15 @@ builder.Services.AddHttpClient("CategoryServiceClient", (serviceProvider, client
     client.BaseAddress = new Uri(settings.CategoryServiceBaseUrl);
 });
 
+builder.Services.AddHttpClient("PaymentServiceClient", (serviceProvider, client) =>
+{
+    var settings = serviceProvider.GetRequiredService<IOptions<ExternalServiceSettings>>().Value;
+    client.BaseAddress = new Uri(settings.PaymentServiceBaseUrl);
+});
+
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 #endregion
 
 #region Database setup

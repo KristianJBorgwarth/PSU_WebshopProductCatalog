@@ -64,7 +64,8 @@ public class IntegrationTestFactory<TProgram, TDbContext> : WebApplicationFactor
             {
                 ["ExternalServiceSettings:CustomerServiceBaseUrl"] = "http://localhost:18085/api/customers/",
                 ["ExternalServiceSettings:CategoryServiceBaseUrl"] = "http://localhost:18084/api/categories/",
-                ["Settings:SeqLogAddress"] = "http://localhost:15341"
+                ["Settings:SeqLogAddress"] = "http://localhost:15341",
+                ["ExternalServiceSettings:PaymentServiceBaseUrl"] = "http://localhost:18083/api/payment/"
             };
             config.AddInMemoryCollection(settings);
         });

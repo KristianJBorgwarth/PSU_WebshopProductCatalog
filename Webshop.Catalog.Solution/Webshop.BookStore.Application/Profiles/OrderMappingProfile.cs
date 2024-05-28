@@ -23,5 +23,14 @@ public class OrderMappingProfile : Profile
             }));
 
         CreateMap<ApplyDiscountRequest, ApplyDiscountCommand>();
+
+        CreateMap<ProcessOrderRequest, ProcessOrderCommand>()
+            .ForMember(dest => dest.PaymentDetails, opt => opt.MapFrom(src => new PaymentRequest
+            {
+                Amount = src.Amount,
+                CardNumber = src.CardNumber,
+                ExpirationDate = src.ExpirationDate,
+                CVC = src.CVC
+            }));
     }
 }

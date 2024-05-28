@@ -2,13 +2,22 @@
 
 namespace Webshop.BookStore.Domain.AggregateRoots;
 
+public enum OrderStatus
+{
+    Pending,
+    Completed,
+    Failed,
+    Cancelled
+}
 public class Order : AggregateRoot
 {
     public int BuyerId { get; set; }
     public List<OrderItem> OrderItems { get; set; } = new();
     public decimal TotalAmount { get; set; }
-    public DateTime OrderDate { get; set; }
     public bool DiscountApplied { get; set; }
+
+    public OrderStatus Status { get; set; }
+    public DateTime OrderDate { get; set; }
 
     public void AddItem(OrderItem item)
     {
@@ -38,9 +47,14 @@ public class Order : AggregateRoot
         TotalAmount -= TotalAmount * discount;
         DiscountApplied = true;
     }
+    public bool CanProcessPayment()
+    {
+        return Status is OrderStatus.Pending or OrderStatus.Failed;
+    }
 
     private void CalculateTotalAmount()
     {
         TotalAmount = OrderItems.Sum(x => x.Price * x.Quantity);
     }
+
 }

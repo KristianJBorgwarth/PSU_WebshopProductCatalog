@@ -88,4 +88,26 @@ public class OrderController : BaseController
             return Error(result.Errors);
         }
     }
+
+    [HttpPost]
+    [Route("process")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ProcessOrder(ProcessOrderRequest request)
+    {
+        ProcessOrderRequest.Validator validator = new();
+        var result = await validator.ValidateAsync(request);
+
+        if(result.IsValid)
+        {
+            var command = _mapper.Map<ProcessOrderCommand>(request);
+            var createResult = await _mediator.Send(command);
+            return createResult.Success ? Ok(createResult) : Error(createResult.Error);
+        }
+        else
+        {
+            _logger.LogError(Join(",", result.Errors.Select(x => x.ErrorMessage)));
+            return Error(result.Errors);
+        }
+    }
 }
