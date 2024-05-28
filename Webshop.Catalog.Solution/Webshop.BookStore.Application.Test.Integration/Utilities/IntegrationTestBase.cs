@@ -12,7 +12,7 @@ public class IntegrationTestBase : IDisposable
     protected readonly BookstoreDbContext db;
     protected readonly HttpClient client;
 
-    protected IntegrationTestBase(WebApplicationFactory<Program> factory)
+    public IntegrationTestBase(WebApplicationFactory<Program> factory)
     {
         var scope = factory.Services.CreateScope();
         db = scope.ServiceProvider.GetRequiredService<BookstoreDbContext>();
