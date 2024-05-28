@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Logging;
 using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Application.Services.PaymentService;
+using Webshop.BookStore.Domain.AggregateRoots;
 using Webshop.Domain.Common;
 
 namespace Webshop.BookStore.Application.Features.Order.Commands.ProcessOrder;
@@ -31,14 +31,25 @@ public class ProcessOrderCommandHandler : IRequestHandler<ProcessOrderCommand, R
                 return Result.Fail(Errors.General.NotFound(request.OrderId));
             }
 
+            if (!order.CanProcessPayment())
+            {
+                return Result.Fail(Errors.General.UnspecifiedError("Order cannot be processed."));
+            }
+
             var paymentResult = await _paymentService.ProcessPayment(request.PaymentDetails);
 
             if (paymentResult.Success)
             {
-
+                order.Status = OrderStatus.Completed;
+                await _orderRepository.UpdateAsync(order);
                 return Result.Ok();
             }
-            else return Result.Fail(Errors.General.UnspecifiedError("An error occurred while processing the payment."));
+            else
+            {
+                order.Status = OrderStatus.Failed;
+                await _orderRepository.UpdateAsync(order);
+                return Result.Fail(Errors.General.UnspecifiedError("An error occurred while processing the payment."));
+            }
         }
         catch (Exception ex)
         {

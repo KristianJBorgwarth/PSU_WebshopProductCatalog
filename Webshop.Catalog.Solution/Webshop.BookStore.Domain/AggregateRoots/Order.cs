@@ -5,9 +5,8 @@ namespace Webshop.BookStore.Domain.AggregateRoots;
 public enum OrderStatus
 {
     Pending,
-    Processing,
-    Shipped,
-    Delivered,
+    Completed,
+    Failed,
     Cancelled
 }
 public class Order : AggregateRoot
@@ -48,9 +47,14 @@ public class Order : AggregateRoot
         TotalAmount -= TotalAmount * discount;
         DiscountApplied = true;
     }
+    public bool CanProcessPayment()
+    {
+        return Status is OrderStatus.Pending or OrderStatus.Failed;
+    }
 
     private void CalculateTotalAmount()
     {
         TotalAmount = OrderItems.Sum(x => x.Price * x.Quantity);
     }
+
 }
