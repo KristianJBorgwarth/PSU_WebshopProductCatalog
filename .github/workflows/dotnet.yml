@@ -25,4 +25,6 @@ jobs:
       - name: Build
         run: dotnet build Webshop.Catalog.Solution/Webshop.Solution.sln --no-restore
       - name: Test
+        env:
+          CI: true
         run: dotnet test Webshop.Catalog.Solution/Webshop.Solution.sln --no-build --verbosity normal

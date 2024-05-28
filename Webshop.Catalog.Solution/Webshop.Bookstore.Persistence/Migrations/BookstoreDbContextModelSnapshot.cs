@@ -128,10 +128,13 @@ namespace Webshopt.Bookstore.Persistence.Migrations
 
             modelBuilder.Entity("Webshop.BookStore.Domain.AggregateRoots.OrderItem", b =>
                 {
-                    b.Property<int>("BookId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("Id")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
                         .HasColumnType("int");
 
                     b.Property<string>("BookTitle")
@@ -144,13 +147,18 @@ namespace Webshopt.Bookstore.Persistence.Migrations
                     b.Property<DateTime>("LastModified")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("BookId", "Id");
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("OrderItems");
                 });
@@ -179,7 +187,7 @@ namespace Webshopt.Bookstore.Persistence.Migrations
                 {
                     b.HasOne("Webshop.BookStore.Domain.AggregateRoots.Order", null)
                         .WithMany("OrderItems")
-                        .HasForeignKey("BookId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

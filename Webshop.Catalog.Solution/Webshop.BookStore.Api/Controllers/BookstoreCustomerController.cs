@@ -6,9 +6,9 @@ using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.DeleteCu
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Commands.UpdateCustomer;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Queries.GetBookStoreCustomerById;
 using Webshop.BookStore.Application.Features.BookStoreCustomer.Queries.GetBookStoreCustomers;
-using Webshop.BookStore.Application.Features.Requests;
+using Webshop.BookStore.Application.Features.BookStoreCustomer.Requests;
 using Webshop.Customer.Api.Controllers;
-using Webshop.Domain.Common;
+using static System.String;
 
 namespace Webshop.BookStore.Api.Controllers;
 
@@ -28,32 +28,58 @@ public class BookstoreCustomerController : BaseController
 
     [HttpPost]
     [Route("")]
-    public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerRequest request)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> CreateCustomer([FromBody] CreateBookStoreCustomerRequest request)
     {
-        CreateCustomerCommand command = _mapper.Map<CreateCustomerCommand>(request);
-        Result result = await _mediator.Send(command);
-
-        return result.Success ? Ok() : BadRequest(result.Error);
+        CreateBookStoreCustomerRequest.Validator validator = new();
+        var result = await validator.ValidateAsync(request);
+        if (result.IsValid)
+        {
+            var command = _mapper.Map<CreateBookStoreCustomerCommand>(request);
+            var createResult = await _mediator.Send(command);
+            return createResult.Success ? Ok(createResult) : Error(createResult.Error);
+        }
+        else
+        {
+            _logger.LogError(Join(",", result.Errors.Select(x => x.ErrorMessage)));
+            return Error(result.Errors);
+        }
     }
-    [HttpPut]
-    [Route("Update")]
-    public async Task<IActionResult> UpdateCustomer([FromBody] UpdateCustomerRequest request)
-    {
-        UpdateCustomerCommand command = _mapper.Map<UpdateCustomerCommand>(request);
-        Result result = await _mediator.Send(command);
 
-        return result.Success ? Ok() : BadRequest(result.Error);
+    [HttpPut]
+    [Route("")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateCustomer([FromBody] UpdateBookStoreCustomerRequest request)
+    {
+        UpdateBookStoreCustomerRequest.Validator validator = new();
+        var result = await validator.ValidateAsync(request);
+        if (result.IsValid)
+        {
+            UpdateBookStoreCustomerCommand command = _mapper.Map<UpdateBookStoreCustomerCommand>(request);
+            var updateResult = await _mediator.Send(command);
+
+            return updateResult.Success ? Ok(updateResult) : Error(updateResult.Error);
+        }
+        else
+        {
+            _logger.LogError(Join(",", result.Errors.Select(x => x.ErrorMessage)));
+            return Error(result.Errors);
+        }
     }
 
     [HttpDelete]
-    [Route("Delete")]
-    public async Task<IActionResult> DeleteCustomer([FromBody] DeleteCustomerRequest request)
+    [Route("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> DeleteCustomer(int id)
     {
-        DeleteCustomerCommand command = _mapper.Map<DeleteCustomerCommand>(request);
-        Result result = await _mediator.Send(command);
+        var result = await _mediator.Send(new DeleteBookStoreCustomerCommand { CustomerId = id });
 
-        return result.Success ? Ok() : BadRequest(result.Error);
+        return result.Success ? Ok(result) : Error(result.Error);
     }
+
     [HttpGet]
     [Route("")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -62,8 +88,8 @@ public class BookstoreCustomerController : BaseController
     public async Task<IActionResult> GetBookStoreCustomers()
     {
         var result = await _mediator.Send(new GetBookStoreCustomersQuery());
-        
-        if (!result.Success) return BadRequest(result.Error);
+
+        if (!result.Success) return Error(result.Error);
         return result.Value.Any() ? Ok(result.Value) : NoContent();
     }
     [HttpGet]
