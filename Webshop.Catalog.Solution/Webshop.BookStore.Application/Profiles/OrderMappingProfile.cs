@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Webshop.BookStore.Application.Features.Order.Commands.AddOrderItemCommand;
 using Webshop.BookStore.Application.Features.Order.Commands.CreateOrder;
+using Webshop.BookStore.Application.Features.Order.Commands.ProcessOrder;
 using Webshop.BookStore.Application.Features.Order.Requests;
 using Webshop.BookStore.Domain.AggregateRoots;
 
@@ -20,5 +21,7 @@ public class OrderMappingProfile : Profile
                 Price = src.Price,
                 Quantity = src.Quantity
             }));
+
+        CreateMap<ApplyDiscountRequest, ApplyDiscountCommand>();
     }
 }

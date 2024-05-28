@@ -59,4 +59,5 @@ public class CreateCustomerEndpointTest : IntegrationTestBase
         errorResponse.ErrorMessage.Should().Be("Error: An error occurred while retrieving customer with id 696969. Status code: BadRequest (unspecified.error)");
         db.BookstoreCustomers.Should().BeEmpty();
     }
+
 }

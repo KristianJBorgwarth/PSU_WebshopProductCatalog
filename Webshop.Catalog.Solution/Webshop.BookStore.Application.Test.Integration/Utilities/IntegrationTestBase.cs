@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Webshop.Bookstore.Persistence.Context;
 
@@ -11,7 +12,7 @@ public class IntegrationTestBase : IDisposable
     protected readonly BookstoreDbContext db;
     protected readonly HttpClient client;
 
-    public IntegrationTestBase(IntegrationTestFactory<Program, BookstoreDbContext> factory)
+    protected IntegrationTestBase(WebApplicationFactory<Program> factory)
     {
         var scope = factory.Services.CreateScope();
         db = scope.ServiceProvider.GetRequiredService<BookstoreDbContext>();
