@@ -59,7 +59,7 @@ public class BookController : BaseController
         var result = await _mediator.Send(new GetBooksQuery());
 
         if (!result.Success) return BadRequest(result.Error);
-        return result.Value.Any() ? Ok(result.Value) : NoContent();
+        return result.Value != null ? Ok(result.Value) : NoContent();
     }
 
 }
