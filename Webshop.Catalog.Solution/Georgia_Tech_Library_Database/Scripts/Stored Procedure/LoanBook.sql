@@ -6,10 +6,6 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    DECLARE @IsLoanable BIT;
-    DECLARE @OnLoan BIT;
-    DECLARE @BookLoanLimit INT;
-    DECLARE @CurrentLoans INT;
     DECLARE @ExpireDate DATE;
     DECLARE @LoanPeriod INT;
     DECLARE @ISBN VARCHAR(50);
@@ -17,12 +13,10 @@ BEGIN
     DECLARE @LoanDate DATE = GETDATE();
     DECLARE @DeadLineDate DATE;
 
-
-    -- Get the ISBN for the book
+    -- Get the ISBN for the book and then select 1 book that is not on loan and isloanable
     SELECT @ISBN = ISBN
     FROM dbo.Book
     WHERE BookID = @BookID;
-
 
     SELECT TOP 1 @BookID = b.BookID
     FROM Book b
@@ -41,7 +35,6 @@ BEGIN
     END
     -- Calculate the deadline date
     SET @DeadlineDate = DATEADD(DAY, @LoanPeriod, @LoanDate);
-
 
     -- Record the loan in the BooksLoaned table
     INSERT INTO dbo.BooksLoaned (LoanID, BookID, MemberCardID, LoanDate, DeadlineDate)

@@ -90,7 +90,7 @@
     <None Include="Scripts\Queries\FindHowManyCopiesOfThisBookIsOwnByChoosenLibrary.sql" />
     <None Include="Scripts\Functions\CountBooksCurrentlyLoanedByMember.sql" />
     <None Include="Scripts\Triggers\CheckMaxBooksLoaned_IntegrationWithFunctions.sql" />
-    <None Include="Scripts\Queries\Top3MostBorrowedBooks.sql" />
+    <None Include="Scripts\Queries\MostBorrowedBooks.sql" />
     <None Include="Scripts\Queries\FindMembersWhoHaveBorrowedBookInThisPeriod.sql" />
   </ItemGroup>
   <ItemGroup>
