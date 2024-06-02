@@ -1,9 +1,11 @@
-﻿using AutoMapper;
+﻿using System.Runtime.InteropServices.JavaScript;
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Webshop.BookStore.Application.Features.Order.Commands.AddOrderItemCommand;
 using Webshop.BookStore.Application.Features.Order.Commands.CreateOrder;
 using Webshop.BookStore.Application.Features.Order.Commands.ProcessOrder;
+using Webshop.BookStore.Application.Features.Order.Queries.GetOrders;
 using Webshop.BookStore.Application.Features.Order.Requests;
 using Webshop.Customer.Api.Controllers;
 using static System.String;
@@ -43,6 +45,19 @@ public class OrderController : BaseController
             _logger.LogError(Join(",", result.Errors.Select(x => x.ErrorMessage)));
             return Error(result.Errors);
         }
+    }
+
+    [HttpGet]
+    [Route("")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetOrders()
+    {
+        var result = await _mediator.Send(new GetOrdersQuery());
+
+        if(result.Success is false) return Error(result.Error);
+        return result.Value.Any() ? Ok(result.Value) : NoContent();
     }
 
     [HttpPut]
