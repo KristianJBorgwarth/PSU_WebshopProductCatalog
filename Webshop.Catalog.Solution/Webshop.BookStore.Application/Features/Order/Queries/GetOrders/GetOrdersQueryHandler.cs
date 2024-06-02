@@ -22,6 +22,16 @@ public class GetOrdersQueryHandler : IRequestHandler<GetOrdersQuery, Result<List
 
     public async Task<Result<List<OrderDto>>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var orders = await _orderRepository.GetAll();
+            var mappedOrders = _mapper.Map<List<OrderDto>>(orders);
+            return mappedOrders;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+            return Result.Fail<List<OrderDto>>(Errors.General.UnspecifiedError(ex.Message));
+        }
     }
 }

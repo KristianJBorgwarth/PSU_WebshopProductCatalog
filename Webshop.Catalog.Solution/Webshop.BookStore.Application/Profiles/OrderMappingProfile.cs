@@ -2,6 +2,7 @@
 using Webshop.BookStore.Application.Features.Order.Commands.AddOrderItemCommand;
 using Webshop.BookStore.Application.Features.Order.Commands.CreateOrder;
 using Webshop.BookStore.Application.Features.Order.Commands.ProcessOrder;
+using Webshop.BookStore.Application.Features.Order.Dtos;
 using Webshop.BookStore.Application.Features.Order.Requests;
 using Webshop.BookStore.Domain.AggregateRoots;
 
@@ -32,5 +33,9 @@ public class OrderMappingProfile : Profile
                 ExpirationDate = src.ExpirationDate,
                 CVC = src.CVC
             }));
+
+        CreateMap<Order, OrderDto>()
+            .ForMember(dest => dest.OrderItems, opt => opt.MapFrom(src => src.OrderItems));
+        CreateMap<OrderItem, OrderItemDto>();
     }
 }

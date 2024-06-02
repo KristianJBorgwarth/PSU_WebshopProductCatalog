@@ -1,4 +1,5 @@
-﻿using Webshop.BookStore.Application.Contracts.Persistence;
+﻿using Microsoft.EntityFrameworkCore;
+using Webshop.BookStore.Application.Contracts.Persistence;
 using Webshop.BookStore.Domain.AggregateRoots;
 using Webshop.Bookstore.Persistence.Context;
 
@@ -32,7 +33,8 @@ public class OrderRepository : IOrderRepository
 
     public async Task<IEnumerable<Order>> GetAll()
     {
-        throw new NotImplementedException();
+        var orders = await _context.Orders.Include(c=> c.OrderItems).ToListAsync();
+        return orders;
     }
 
     public async Task UpdateAsync(Order entity)
